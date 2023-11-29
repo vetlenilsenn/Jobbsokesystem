@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Job Applications</title>
     <style>
         body {
@@ -26,10 +27,14 @@
         }
     </style>
 </head>
+
+
 <body>
+    <?php include('templates/header/header.php'); ?>
     <h2>Job Applications</h2>
 
     <?php
+     
     // Include your database connection script here using PDO
     include('database/tilkobling.php'); // Adjust the path as needed
 
