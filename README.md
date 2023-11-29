@@ -11,6 +11,8 @@
      - `username`: User's username.
      - `password`: User's password.
      - `email`: User's email.
+     - `name`: Name of user
+     - `surname`: Surname of user
      - `is_company`: Indicates if the user is a company.
 
 2. **companies Table:**
