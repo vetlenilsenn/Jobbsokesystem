@@ -34,6 +34,8 @@ $sqlCreateUsersTable = "CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
     is_company BOOLEAN NOT NULL
 )";
 try {
@@ -64,6 +66,9 @@ $sqlCreateJobApplicationsTable = "CREATE TABLE IF NOT EXISTS job_applications (
     user_id INT,
     company_id INT,
     job_title VARCHAR(100) NOT NULL,
+    company_name VARCHAR(100) NOT NULL, -- Add company_name field
+    job_description TEXT NOT NULL, -- Add job_description field
+    job_category VARCHAR(50) NOT NULL, -- Add job_category field
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (company_id) REFERENCES companies(company_id)
 )";
