@@ -109,5 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <input type="submit" value="Create User and Company">
     </form>
+    <p>Har du allerede en konto? <a href="login.php"> Logg inn her</a></p>
 </body>
 </html>

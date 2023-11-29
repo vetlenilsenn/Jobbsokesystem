@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Include your database connection file (adjust the path accordingly)
-require_once 'database/tilkobling.php';
+require_once '../database/tilkobling.php';
 
 // Fetch job application details
 try {

@@ -1,5 +1,5 @@
 <?php
-require_once 'database/tilkobling.php'; // Include the connection file
+require_once '../database/tilkobling.php';
 session_start();
 
 // Check if the user is logged in and is an employer
@@ -65,5 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <input type="submit" value="Create Job Application">
     </form>
+    <a href="../login.php">Logg ut</a>
 </body>
 </html>

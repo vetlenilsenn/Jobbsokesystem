@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Include your database connection file (adjust the path accordingly)
-require_once 'database/tilkobling.php';
+require_once '../database/tilkobling.php';
 
 // Fetch job applications from the database
 try {
@@ -44,6 +44,6 @@ try {
         <?php endforeach; ?>
     </ul>
 
-    <a href="index.php">Logg ut</a>
+    <a href="../login.php">Logg ut</a>
 </body>
 </html>

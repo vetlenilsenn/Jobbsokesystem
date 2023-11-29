@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
     
             // This is an employer, redirect to the employer page
-            header('Location: arbeidsgiver_side.php');
+            header('Location: arbeidsgivere/arbeidsgiver_side.php');
             exit(); // Ensure that no further code is executed after the redirect
         } else {
             // This is a job seeker, redirect to the existing protected page
-            header('Location: bruker_side.php');
+            header('Location: jobbsokere/bruker_side.php');
             exit(); // Ensure that no further code is executed after the redirect
         }
     } else {
@@ -50,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Innlogging</title>
-    <li><a href="Index8.php">Tilbake til Index8</a></li> 
     <meta charset="UTF-8">
 </head>
 <body>
@@ -65,6 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="Logg inn">
     </form>
 
-    <p>Har du ikke en konto? <a href="registration.html">Registrer deg her</a></p>
+    <p>Har du ikke en konto? <a href="registration.php">Registrer deg her</a></p>
 </body>
 </html>
