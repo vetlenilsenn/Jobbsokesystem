@@ -31,10 +31,15 @@ try {
             <li>
                 <strong><?php echo $job['job_title']; ?></strong>
                 - <?php echo $job['job_description']; ?>
-                <form action="bruker_side_apply.php" method="post">
-                    <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
-                    <input type="submit" value="View and Apply">
-                </form>
+<!-- Change the form method back to POST -->
+<form action="bruker_side_apply.php" method="post">
+    <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
+    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+    <!-- Remove the letter_text field -->
+    <input type="submit" value="View and Apply">
+</form>
+
+
             </li>
         <?php endforeach; ?>
     </ul>
