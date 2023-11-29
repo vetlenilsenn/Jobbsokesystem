@@ -43,15 +43,19 @@ try {
 
         // Generate random data for each column in job_applications
         $job_title = "Job Title $i";
+        $job_description = "Job Description $i";
+        $job_category = "Job Category $i";
 
         // Insert the generated data into the job_applications table
         $stmt = $pdo->prepare("
-            INSERT INTO job_applications (user_id, company_id, job_title) 
-            VALUES (:user_id, :company_id, :job_title)
+            INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category) 
+            VALUES (:user_id, :company_id, :job_title, :job_description, :job_category)
         ");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
         $stmt->bindParam(':job_title', $job_title, PDO::PARAM_STR);
+        $stmt->bindParam(':job_description', $job_description, PDO::PARAM_STR);
+        $stmt->bindParam(':job_category', $job_category, PDO::PARAM_STR);
         $stmt->execute();
     }
 

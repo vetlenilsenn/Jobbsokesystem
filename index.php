@@ -31,23 +31,31 @@
 
     <?php
     // Include your database connection script here using PDO
-    include('database/tilkobling.php');  // Include the connection file
+    include('database/tilkobling.php'); // Adjust the path as needed
 
     try {
-        // Fetch job applications data
-        $stmt = $pdo->query("SELECT * FROM job_applications");
+        // Fetch job applications data with company details
+        $stmt = $pdo->query("
+            SELECT 
+                ja.job_title,
+                c.company_name,
+                ja.job_description,
+                ja.job_category
+            FROM job_applications ja
+            JOIN companies c ON ja.company_id = c.company_id
+        ");
         $jobApplications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Display the data in a table
         if ($jobApplications) {
             echo '<table>';
-            echo '<tr><th>Application ID</th><th>User ID</th><th>Company ID</th><th>Job Title</th></tr>';
+            echo '<tr><th>Job Title</th><th>Company Name</th><th>Job Description</th><th>Job Category</th></tr>';
             foreach ($jobApplications as $application) {
                 echo '<tr>';
-                echo '<td>' . $application['application_id'] . '</td>';
-                echo '<td>' . $application['user_id'] . '</td>';
-                echo '<td>' . $application['company_id'] . '</td>';
                 echo '<td>' . $application['job_title'] . '</td>';
+                echo '<td>' . $application['company_name'] . '</td>';
+                echo '<td>' . $application['job_description'] . '</td>';
+                echo '<td>' . $application['job_category'] . '</td>';
                 echo '</tr>';
             }
             echo '</table>';
