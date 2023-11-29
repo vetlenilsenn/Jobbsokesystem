@@ -31,6 +31,9 @@
      - `user_id`: User applying for the job (linked to users table).
      - `company_id`: Company receiving the application (linked to companies table).
      - `job_title`: Title of the job applied for.
+     - `company_name`: Name of the company
+     - `job_description`: Description of the job
+     - `job_category`: Category of the job
      - *Foreign Keys:* Link to `user_id` in users table and `company_id` in companies table.
 
 4. **received_applications Table:**
