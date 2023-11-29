@@ -48,3 +48,4 @@
 - The database is created and connected using PHP Data Objects (PDO).
 - Relationships between tables are maintained using foreign keys for data integrity.
 - The structure supports tracking users, companies, job applications, and received applications in a comprehensive manner.
+- Include your database connection script here using PDO: include('database/tilkobling.php');
