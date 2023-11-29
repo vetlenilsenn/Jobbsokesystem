@@ -38,25 +38,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $letterText = isset($_POST['letter_text']) ? $_POST['letter_text'] : null;
 
     if (!empty($letterText)) {
-        // Insert into received_applications table
-        try {
-            $cvPath = 'path_to_cv.pdf'; // Example path to CV
+        // Handle file upload
+        if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
+            $cvTempPath = $_FILES['cv']['tmp_name'];
+            $cvPath = 'uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
 
-            $insertQuery = "INSERT INTO received_applications (job_application_id, user_id, cv_path, letter_text, date_applied) 
-                            VALUES (:job_application_id, :user_id, :cv_path, :letter_text, NOW())";
-            $insertStmt = $pdo->prepare($insertQuery);
-            $insertStmt->bindParam(':job_application_id', $jobId, PDO::PARAM_INT);
-            $insertStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $insertStmt->bindParam(':cv_path', $cvPath, PDO::PARAM_STR);
-            $insertStmt->bindParam(':letter_text', $letterText, PDO::PARAM_STR);
+            // Move the uploaded file to the desired location
+            if (move_uploaded_file($cvTempPath, $cvPath)) {
+                // Insert into received_applications table
+                try {
+                    $insertQuery = "INSERT INTO received_applications (job_application_id, user_id, cv_path, letter_text, date_applied) 
+                                    VALUES (:job_application_id, :user_id, :cv_path, :letter_text, NOW())";
+                    $insertStmt = $pdo->prepare($insertQuery);
+                    $insertStmt->bindParam(':job_application_id', $jobId, PDO::PARAM_INT);
+                    $insertStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                    $insertStmt->bindParam(':cv_path', $cvPath, PDO::PARAM_STR);
+                    $insertStmt->bindParam(':letter_text', $letterText, PDO::PARAM_STR);
 
-            if ($insertStmt->execute()) {
-                echo "Application submitted successfully.";
+                    if ($insertStmt->execute()) {
+                        echo "Application submitted successfully.";
+                    } else {
+                        echo "Error submitting application.";
+                    }
+                } catch (PDOException $e) {
+                    die("Error processing application: " . $e->getMessage());
+                }
             } else {
-                echo "Error submitting application.";
+                echo "Error moving uploaded CV file.";
             }
-        } catch (PDOException $e) {
-            die("Error processing application: " . $e->getMessage());
+        } else {
+            echo "CV file not uploaded or invalid.";
         }
     }
 }
