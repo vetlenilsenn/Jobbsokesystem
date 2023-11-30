@@ -39,11 +39,10 @@ try {
     <input type="submit" value="View and Apply">
 </form>
 
-
             </li>
         <?php endforeach; ?>
     </ul>
-
+    <a href="bruker_info.php">Profil</a> </br>
     <a href="../login.php">Logg ut</a>
 </body>
 </html>
