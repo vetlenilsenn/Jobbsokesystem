@@ -14,6 +14,7 @@
      - `name`: Name of user
      - `surname`: Surname of user
      - `is_company`: Indicates if the user is a company.
+     - `profile_picture`: profil picture
 
 2. **companies Table:**
    - Stores details of companies.
