@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($company) {
                 $_SESSION['company_id'] = $company['company_id']; // Save the company_id in the session for employers
                 $_SESSION['company_name'] = $company['company_name']; // Save the company_name in the session for employers
+                $_SESSION['is_company'] = true; // Set a session variable for companies
             }
     
             // This is an employer, redirect to the employer page
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit(); // Ensure that no further code is executed after the redirect
         } else {
             // This is a job seeker, redirect to the existing protected page
-            header('Location: jobbsokere/bruker_side.php');
+            header('Location: jobbsokere\bruker_side.php');
             exit(); // Ensure that no further code is executed after the redirect
         }
     } else {

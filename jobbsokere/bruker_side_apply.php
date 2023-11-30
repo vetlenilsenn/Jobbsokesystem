@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Handle file upload
         if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
             $cvTempPath = $_FILES['cv']['tmp_name'];
-            $cvPath = 'uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
+            $cvPath = '../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
 
             // Move the uploaded file to the desired location
             if (move_uploaded_file($cvTempPath, $cvPath)) {
@@ -78,6 +78,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Bruker Side Apply</title>
+    <style>
+        /* Style to set the map image width */
+        .map-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <h1>Application Details</h1>
@@ -86,6 +93,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><strong>Job Description:</strong> <?php echo $jobApplication['job_description']; ?></p>
     <p><strong>Job Category:</strong> <?php echo $jobApplication['job_category']; ?></p>
     <p><strong>Contact Person:</strong> <?php echo isset($jobApplication['contact_person']) ? $jobApplication['contact_person'] : 'N/A'; ?></p>
+
+    <?php
+    // Display the map for the job location using MapQuest if a location is specified
+    if (!empty($jobApplication['location'])):
+    ?>
+        <img class="map-image" src="https://www.mapquestapi.com/staticmap/v5/map?key=btjIKc7BBgW3hVRGcw34hVn7YYYDioce&size=600,400&locations=<?php echo urlencode($jobApplication['location']); ?>" alt="Kartutsnitt">
+    <?php else: ?>
+        <p>No location specified for this job application.</p>
+    <?php endif; ?>
 
     <h2>Submit Your Application</h2>
     <form action="bruker_side_apply.php" method="post" enctype="multipart/form-data">
@@ -100,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <input type="submit" value="Submit Application">
     </form>
-
-    <a href="index.php">Logg ut</a>
+    <a href="bruker_side.php">Back to bruker_side</a> </br>  
+    <a href="../login.php">Logg ut</a>
 </body>
 </html>

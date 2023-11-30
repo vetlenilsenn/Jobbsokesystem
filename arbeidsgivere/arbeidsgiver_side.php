@@ -9,14 +9,14 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
 }
 
 // Function to create a new job application
-function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $jobCategory) {
+function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $jobCategory, $location) {
     global $pdo;
 
     // Retrieve company name from the session
     $companyName = $_SESSION['company_name'];
 
-    $query = "INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category, company_name) 
-              VALUES (:user_id, :company_id, :job_title, :job_description, :job_category, :company_name)";
+    $query = "INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category, company_name, location) 
+              VALUES (:user_id, :company_id, :job_title, :job_description, :job_category, :company_name, :location)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
     $stmt->bindParam(':company_id', $companyId, PDO::PARAM_INT);
@@ -24,6 +24,7 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
     $stmt->bindParam(':job_description', $jobDescription, PDO::PARAM_STR);
     $stmt->bindParam(':job_category', $jobCategory, PDO::PARAM_STR);
     $stmt->bindParam(':company_name', $companyName, PDO::PARAM_STR);
+    $stmt->bindParam(':location', $location, PDO::PARAM_STR);
 
     return $stmt->execute();
 }
@@ -33,9 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jobTitle = $_POST['job_title'];
     $jobDescription = $_POST['job_description'];
     $jobCategory = $_POST['job_category'];
+    $location = $_POST['location']; // Added location field
 
     // Create job application
-    if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory)) {
+    if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
         echo "Job application created successfully.";
     } else {
         echo "Error creating job application.";
@@ -62,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <label for="job_category">Job Category:</label>
         <input type="text" id="job_category" name="job_category" required>
+        <br>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
         <br>
         <input type="submit" value="Create Job Application">
     </form>
