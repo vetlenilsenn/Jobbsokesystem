@@ -15,6 +15,7 @@
      - `surname`: Surname of user
      - `is_company`: Indicates if the user is a company.
      - `profile_picture`: profil picture
+     - `searchable`: Whether or not a company can search for the user
 
 2. **companies Table:**
    - Stores details of companies.
