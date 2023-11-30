@@ -20,6 +20,7 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
 
     <h2>Employer Options</h2>
     <ul>
+        <li><a href="arbeidsgiver_view_users.php">View users</a></li>
         <li><a href="arbeidsgiver_nyapplication.php">Create New Job Application</a></li>
         <li><a href="arbeidsgiver_applications.php">View Job Applications</a></li>
     </ul>

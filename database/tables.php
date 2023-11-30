@@ -37,8 +37,11 @@ $sqlCreateUsersTable = "CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(50) NOT NULL,
     surname VARCHAR(50) NOT NULL,
     is_company BOOLEAN NOT NULL,
-    profile_picture VARCHAR(255)
+    profile_picture VARCHAR(255),
+    searchable BOOLEAN DEFAULT false,
+    user_category VARCHAR(50)
 )";
+
 try {
     $pdo->exec($sqlCreateUsersTable);
     echo "Users table created successfully\n";
