@@ -76,6 +76,6 @@ try {
         <?php endforeach; ?>
     </ul>
     <a href="arbeidsgiver_side.php">Tilbake til arbeidsgiver side</a></br>
-    <a href="../login.php">Logg ut</a>
+    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

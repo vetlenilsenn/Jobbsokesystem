@@ -55,6 +55,6 @@ try {
         <?php endforeach; ?>
     </ul>
     <a href="arbeidsgiver_applications.php">Tilbake til applikasjonsoversikt</a></br>
-    <a href="../login.php">Logg ut</a>
+    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

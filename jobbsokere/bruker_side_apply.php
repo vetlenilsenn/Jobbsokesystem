@@ -117,6 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="Submit Application">
     </form>
     <a href="bruker_side.php">Back to bruker_side</a> </br>  
-    <a href="../login.php">Logg ut</a>
+    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

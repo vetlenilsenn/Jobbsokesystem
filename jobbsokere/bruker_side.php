@@ -78,6 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
         <?php endforeach; ?>
     </ul>
     <a href="bruker_info.php">Profil</a> </br>
-    <a href="../login.php">Logg ut</a>
+    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

@@ -71,6 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="Create Job Application">
     </form>
     <a href="arbeidsgiver_side.php">Tilbake til arbeidsgiverside</a> </br>
-    <a href="../login.php">Logg ut</a>
+    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

@@ -105,6 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     står i søknaden!
 </p>
     <a href="bruker_side.php">Tilbake til brukersiden</a> </br>
-    <a href="../login.php">Logg ut</a>
+    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

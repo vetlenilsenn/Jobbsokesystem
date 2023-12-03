@@ -25,6 +25,6 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
         <li><a href="arbeidsgiver_applications.php">View Job Applications</a></li>
     </ul>
 
-    <a href="../login.php">Log Out</a>
+    <a href="../logout.php">Log Out</a>
 </body>
 </html>
