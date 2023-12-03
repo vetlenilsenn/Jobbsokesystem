@@ -1,8 +1,8 @@
 <?php
-require_once 'database/tilkobling.php';
+require_once '../../database/tilkobling.php';
 
 session_start(); // Start the session
-include('templates/header/header.php');
+include('../../templates/header/header.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -45,10 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Redirect based on user type
         if ($_SESSION['is_company']) {
             // This is an employer, redirect to the employer page
-            header('Location: arbeidsgivere/arbeidsgiver_side.php');
+            header('Location: ../../arbeidsgivere/arbeidsgiver_side.php');
         } elseif ($_SESSION['is_user']) {
             // This is a job seeker, redirect to the existing protected page
-            header('Location: jobbsokere/bruker_side.php');
+            header('Location: ../../jobbsokere/sokjobb/bruker_side.php');
         }
         exit(); // Ensure that no further code is executed after the redirect
     } else {
