@@ -31,7 +31,7 @@
 
 <body>
     <?php include('templates/header/header.php'); ?>
-    <h2>Job Applications</h2>
+    <h2>Job Aepplications</h2>
 
     <?php
      
