@@ -1,10 +1,12 @@
 <?php
 require_once '../database/tilkobling.php';
 session_start();
+include('../templates/header/header.php');
+
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+    header('Location: login.php');
     exit();
 }
 
@@ -16,7 +18,7 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
     $companyName = $_SESSION['company_name'];
 
     $query = "INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category, company_name, location) 
-              VALUES (:user_id, :company_id, :job_title, :job_description, :job_category, :company_name, :location)";
+            VALUES (:user_id, :company_id, :job_title, :job_description, :job_category, :company_name, :location)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
     $stmt->bindParam(':company_id', $companyId, PDO::PARAM_INT);
@@ -70,7 +72,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <input type="submit" value="Create Job Application">
     </form>
-    <a href="arbeidsgiver_side.php">Tilbake til arbeidsgiverside</a> </br>
-    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

@@ -31,10 +31,9 @@
 
 <body>
     <?php include('templates/header/header.php'); ?>
-    <h2>Job Aepplications</h2>
+    <h2>Job Applications</h2>
 
     <?php
-     
     // Include your database connection script here using PDO
     include('database/tilkobling.php'); // Adjust the path as needed
 

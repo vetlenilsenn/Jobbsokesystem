@@ -1,9 +1,10 @@
 <?php
 session_start();
+include('../templates/header/header.php');
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+    header('Location: login.php');
     exit();
 }
 
@@ -75,7 +76,5 @@ try {
             </li>
         <?php endforeach; ?>
     </ul>
-    <a href="arbeidsgiver_side.php">Tilbake til arbeidsgiver side</a></br>
-    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

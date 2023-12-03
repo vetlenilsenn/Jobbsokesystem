@@ -5,7 +5,7 @@ require_once 'tilkobling.php';
 // Example data for users table
 $usersData = [
     ['username' => 'Isak', 'password' => password_hash('Isak', PASSWORD_DEFAULT), 'email' => 'john@example.com', 'name' => 'John', 'surname' => 'Doe', 'is_company' => 0, 'profile_picture' => 'path/to/profile_picture.jpg', 'searchable' => true, 'user_category' => 'Marketing'],
-    ['username' => 'Vetle', 'password' => password_hash('Vetle', PASSWORD_DEFAULT), 'email' => 'info@companyxyz.com', 'name' => 'Company', 'surname' => 'XYZ', 'is_company' => 1, 'profile_picture' => 'path/to/company_logo.jpg', 'searchable' => false,]
+    ['username' => 'Vetle', 'password' => password_hash('Vetle', PASSWORD_DEFAULT), 'email' => 'info@companyxyz.com', 'name' => 'Company', 'surname' => 'XYZ', 'is_company' => 1, 'profile_picture' => 'path/to/company_logo.jpg', 'searchable' => false, 'user_category' => NULL]
 ];
 
 // Example data for companies table
@@ -27,7 +27,7 @@ $receivedApplicationsData = [
 
 // Insert example data into users table
 foreach ($usersData as $userData) {
-    $insertQuery = "INSERT INTO users (username, password, email, name, surname, is_company, profile_picture, searchable) VALUES (:username, :password, :email, :name, :surname, :is_company, :profile_picture, :searchable)";
+    $insertQuery = "INSERT INTO users (username, password, email, name, surname, is_company, profile_picture, searchable, user_category) VALUES (:username, :password, :email, :name, :surname, :is_company, :profile_picture, :searchable, :user_category)";
     $stmt = $pdo->prepare($insertQuery);
     $stmt->execute($userData);
 }

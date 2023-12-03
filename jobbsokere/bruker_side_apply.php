@@ -1,9 +1,10 @@
 <?php
-// Check if the user is logged in and is an employer
-if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
     exit();
 }
+include('../templates/header/header.php');
 
 // Include your database connection file (adjust the path accordingly)
 require_once '../database/tilkobling.php';
@@ -116,7 +117,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <input type="submit" value="Submit Application">
     </form>
-    <a href="bruker_side.php">Back to bruker_side</a> </br>  
-    <a href="../logout.php">Logg ut</a>
 </body>
 </html>
