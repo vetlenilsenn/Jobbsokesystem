@@ -3,7 +3,7 @@ session_start();
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit();
 }
 

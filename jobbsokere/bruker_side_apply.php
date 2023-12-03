@@ -1,7 +1,7 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
+// Check if the user is logged in and is an employer
+if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
+    header('Location: ../login.php');
     exit();
 }
 
