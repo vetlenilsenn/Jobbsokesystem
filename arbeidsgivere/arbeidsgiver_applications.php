@@ -1,6 +1,7 @@
 <?php
 require_once '../database/tilkobling.php';
 session_start();
+include('../templates/header/header.php');
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
@@ -46,7 +47,5 @@ try {
             </li>
         <?php endforeach; ?>
     </ul>
-    <a href="arbeidsgiver_side.php">Tilbake til arbeidsgiverside</a></br>
-    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

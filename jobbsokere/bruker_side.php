@@ -1,10 +1,10 @@
 <?php
 session_start();
-// Check if the user is logged in and is an employer
-if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
     exit();
 }
+include('../templates/header/header.php');
 
 // Include your database connection file (adjust the path accordingly)
 require_once '../database/tilkobling.php';
@@ -78,7 +78,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
             </li>
         <?php endforeach; ?>
     </ul>
-    <a href="bruker_info.php">Profil</a> </br>
-    <a href="../logout.php">Logg ut</a>
 </body>
 </html>

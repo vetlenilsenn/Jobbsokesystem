@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+    header('Location: login.php');
     exit();
 }
 
@@ -19,8 +19,8 @@ $jobApplicationId = $_POST['job_application_id'];
 // Fetch applicants for the selected job application with user details
 try {
     $query = "SELECT ra.*, u.name, u.surname FROM received_applications ra
-              JOIN users u ON ra.user_id = u.user_id
-              WHERE ra.job_application_id = :job_application_id";
+            JOIN users u ON ra.user_id = u.user_id
+            WHERE ra.job_application_id = :job_application_id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':job_application_id', $jobApplicationId, PDO::PARAM_INT);
     $stmt->execute();
@@ -55,6 +55,6 @@ try {
         <?php endforeach; ?>
     </ul>
     <a href="arbeidsgiver_applications.php">Tilbake til applikasjonsoversikt</a></br>
-    <a href="../logout.php">Logg ut</a>
+    <a href="../login.php">Logg ut</a>
 </body>
 </html>

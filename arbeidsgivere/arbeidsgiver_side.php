@@ -1,9 +1,10 @@
 <?php
 session_start();
+include('../templates/header/header.php');
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+    header('Location: login.php');
     exit();
 }
 ?>
@@ -24,7 +25,5 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
         <li><a href="arbeidsgiver_nyapplication.php">Create New Job Application</a></li>
         <li><a href="arbeidsgiver_applications.php">View Job Applications</a></li>
     </ul>
-
-    <a href="../logout.php">Log Out</a>
 </body>
 </html>

@@ -1,11 +1,10 @@
 <?php
 session_start();
-// Check if the user is logged in and is an employer
-if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: ../login.php');
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
     exit();
 }
-
+include('../templates/header/header.php');
 // Include your database connection file (adjust the path accordingly)
 require_once '../database/tilkobling.php';
 
@@ -105,7 +104,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Vær obs på at endringer som er gjort etter innsendt søknad kan føre til at inkorrekt info
     står i søknaden!
 </p>
-    <a href="bruker_side.php">Tilbake til brukersiden</a> </br>
-    <a href="../logout.php">Logg ut</a>
 </body>
 </html>
