@@ -3,7 +3,6 @@
 
 require_once '../../database/tilkobling.php';
 session_start();
-include('../../templates/header/header.php');
 
 
 
@@ -54,8 +53,69 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Users by User Category</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+            color: #555;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        /* Be more specific with a class, assuming your targeted li has a class like 'user-item' */
+        
+        li.user-item {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        li.user-item strong {
+            color: #333;
+        }
+
+    </style>
 </head>
 <body>
+    <?php include('../../templates/header/header.php'); ?>
     <h2>Filter by User Category</h2>
     <form action="arbeidsgiver_view_users.php" method="post">
         <label for="user_category">Select User Category:</label>
@@ -71,7 +131,7 @@ try {
     <h2>Users with Searchable as True</h2>
     <ul>
         <?php foreach ($users as $user) : ?>
-            <li>
+            <li class="user-item">
                 <strong>Navn:</strong> <?php echo $user['name'] . ' ' . $user['surname']; ?><br>
                 <strong>User Category:</strong> <?php echo $user['user_category']; ?><br>
                 <strong>Profile Picture:</strong> <?php echo $user['profile_picture']; ?><br>

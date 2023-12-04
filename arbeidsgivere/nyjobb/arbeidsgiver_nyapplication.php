@@ -2,7 +2,7 @@
 require_once '../../database/tilkobling.php';
 
 session_start();
-include('../../templates/header/header.php');
+
 
 
 // Check if the user is logged in and is an employer
@@ -55,22 +55,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Job Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
+    <?php include('../../templates/header/header.php'); ?>
+
     <h2>Create Job Application</h2>
     <form action="arbeidsgiver_nyapplication.php" method="post" accept-charset="UTF-8">
         <label for="job_title">Job Title:</label>
         <input type="text" id="job_title" name="job_title" required>
-        <br>
+
         <label for="job_description">Job Description:</label>
         <textarea id="job_description" name="job_description" required></textarea>
-        <br>
+
         <label for="job_category">Job Category:</label>
         <input type="text" id="job_category" name="job_category" required>
-        <br>
+
         <label for="location">Location:</label>
         <input type="text" id="location" name="location" required>
-        <br>
+
         <input type="submit" value="Create Job Application">
     </form>
 </body>

@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 require_once '../../database/tilkobling.php';
-include('../../templates/header/header.php');
+
 
 
 // Fetch user information
@@ -69,41 +69,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+            margin: 10px 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
+    <?php include('../../templates/header/header.php'); ?>
     <h2>User Information</h2>
     <p><strong>Username:</strong> <?php echo $userInfo['username']; ?></p>
 
     <form action="bruker_info.php" method="post">
         <label for="new_name">Name:</label>
         <input type="text" id="new_name" name="new_name" value="<?php echo $userInfo['name']; ?>">
-        <br>
 
         <label for="new_surname">Surname:</label>
         <input type="text" id="new_surname" name="new_surname" value="<?php echo $userInfo['surname']; ?>">
-        <br>
 
         <label for="new_email">Email:</label>
         <input type="email" id="new_email" name="new_email" value="<?php echo $userInfo['email']; ?>">
-        <br>
 
         <label for="searchable">Searchable:</label>
         <input type="checkbox" id="searchable" name="searchable" <?php echo $userInfo['searchable'] ? 'checked' : ''; ?>>
-        <br>
 
         <label for="user_category">Hovederfaringsområde:</label>
         <input type="text" id="user_category" name="user_category" value="<?php echo $userInfo['user_category']; ?>">
-        <br>
 
         <label for="new_password">New Password:</label>
         <input type="password" id="new_password" name="new_password">
-        <br>
 
         <input type="submit" value="Update Information">
     </form>
     <p> 
-    Vær obs på at endringer som er gjort etter innsendt søknad kan føre til at inkorrekt info
-    står i søknaden!
-</p>
+        Vær obs på at endringer som er gjort etter innsendt søknad kan føre til at inkorrekt info
+        står i søknaden!
+    </p>
 </body>
 </html>

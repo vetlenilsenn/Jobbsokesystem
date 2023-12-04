@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
 
 
 require_once '../../database/tilkobling.php';
-include('../../templates/header/header.php');
+
 
 
 // Fetch unique job categories from the database
@@ -44,12 +44,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
 }
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Brukerside</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 8px;
+            color: #555;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .job-application-item {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 4px;
+        text-align: left;
+    }
+
+    .job-application-item strong {
+        color: #333;
+    }
+    </style>
 </head>
 <body>
-    <h1>Velkommen til brukersiden, <?php echo $_SESSION['user']; ?>!</h1>
+    <?php include('../../templates/header/header.php'); ?>
+    <h1>Welcome to the user page, <?php echo $_SESSION['user']; ?>!</h1>
     
     <h2>Job Applications</h2>
 
@@ -65,19 +128,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
     </form>
 
     <ul>
-        <?php foreach ($jobApplications as $job) : ?>
-            <li>
-                <strong><?php echo $job['job_title']; ?></strong>
-                - <?php echo $job['job_description']; ?>
-                <!-- Change the form method back to POST -->
-                <form action="bruker_side_apply.php" method="post">
-                    <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                    <!-- Remove the letter_text field -->
-                    <input type="submit" value="View and Apply">
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <?php foreach ($jobApplications as $job) : ?>
+        <li class="job-application-item">
+            <strong><?php echo $job['job_title']; ?></strong>
+            - <?php echo $job['job_description']; ?>
+            <!-- Change the form method back to POST -->
+            <form action="bruker_side_apply.php" method="post">
+                <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
+                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                <!-- Remove the letter_text field -->
+                <input type="submit" value="View and Apply">
+            </form>
+        </li>
+    <?php endforeach; ?>
+</ul>
+
 </body>
 </html>

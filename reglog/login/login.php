@@ -2,7 +2,7 @@
 require_once '../../database/tilkobling.php';
 
 session_start(); // Start the session
-include('../../templates/header/header.php');
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -63,8 +63,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Innlogging</title>
     <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 15px;
+            color: #555;
+        }
+
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+    <?php include('../../templates/header/header.php'); ?>
+        
     <h2>Innlogging</h2>
     <form action="login.php" method="post" accept-charset="UTF-8">
         <label for="username">Brukernavn:</label>

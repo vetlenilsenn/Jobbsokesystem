@@ -9,25 +9,29 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f8f8f8;
+        }
+        h2 {
+            color: #333;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         th, td {
+            border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
+            color: #333;
         }
     </style>
 </head>
-
 
 <body>
     <?php include('templates/header/header.php'); ?>
