@@ -44,8 +44,8 @@
                 echo '<li><a href="bruker_info.php">Profil</a></li>';
             } else {
                 // Display default menu items for users not logged in
-                echo '<li><a href="/index.php">Hjem</a></li>';
-                echo '<li><a href="/login.php">Logg inn</a></li>';
+                echo '<li><a href="../../index.php">Hjem</a></li>';
+                echo '<li><a href=/jobbsokesystem/reglog/login/login.php">Logg inn</a></li>';
             }
             ?>
         </ul>
@@ -54,9 +54,10 @@
         // Display logout link if a user is logged in
         if (isset($_SESSION['user'])) {
             echo '<div class="logout">';
-            echo '<a href="/logout.php">Logg ut</a>';
+            echo '<a href="../reglog/login/logout.php">Logg ut</a>';
             echo '</div>';
         }
+        
         ?>
     </div>
 
