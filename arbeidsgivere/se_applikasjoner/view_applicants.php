@@ -2,7 +2,7 @@
 require_once '../../database/tilkobling.php';
 
 session_start();
-include('../../templates/header/header.php');
+
 
 
 // Check if the user is logged in and is an employer
@@ -33,19 +33,72 @@ try {
 }
 ?>
 
-<!-- HTML content for displaying applicants for the selected job application -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applikanter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .applicant-li {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .applicant-li strong {
+            color: #333;
+        }
+
+        .applicant-li form {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .applicant-li button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .applicant-li button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
+    <?php include('../../templates/header/header.php'); ?>
     <h2>Alle applikanter til jobben</h2>
     <ul>
         <?php foreach ($applicants as $applicant) : ?>
-            <li>
+            <li class="applicant-li">
                 <strong>Navn:</strong> <?php echo $applicant['name'] . ' ' . $applicant['surname']; ?><br>
                 <!-- Replace CV display with a button to view CV in a new page tab -->
                 <form action="view_cv.php" method="post" target="_blank">
@@ -58,6 +111,5 @@ try {
         <?php endforeach; ?>
     </ul>
     <a href="arbeidsgiver_applications.php">Tilbake til applikasjonsoversikt</a></br>
-    <a href="../login.php">Logg ut</a>
 </body>
 </html>

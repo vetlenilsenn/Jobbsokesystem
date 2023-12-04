@@ -1,7 +1,7 @@
 <?php
-require_once '../database/tilkobling.php';
+require_once '../../database/tilkobling.php';
+
 session_start();
-include('../templates/header/header.php');
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
@@ -30,12 +30,60 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Applications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .job-application {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .job-application strong {
+            color: #333;
+        }
+
+        .job-application form {
+            display: inline-block;
+        }
+
+        .job-application input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .job-application input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
+    <?php include('../../templates/header/header.php'); ?>
     <h2>Job Applications</h2>
     <ul>
         <?php foreach ($jobApplications as $job) : ?>
-            <li>
+            <li class="job-application">
                 <strong><?php echo $job['job_title']; ?></strong>
                 - <?php echo $job['job_description']; ?>
                 - <?php echo $job['location']; ?>
@@ -49,3 +97,6 @@ try {
     </ul>
 </body>
 </html>
+
+
+
