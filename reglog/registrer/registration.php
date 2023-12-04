@@ -1,5 +1,6 @@
 <?php
-require_once 'database/tilkobling.php'; // Include the connection file
+require_once '../../database/tilkobling.php';
+include('../../templates/header/header.php');
 
 // Function to create a new user
 function createUser($username, $password, $email, $isCompany, $name, $surname) {
@@ -109,6 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <input type="submit" value="Create User and Company">
     </form>
-    <p>Har du allerede en konto? <a href="login.php"> Logg inn her</a></p>
+    <p>Har du allerede en konto? <a href="../login/login.php"> Logg inn her</a></p>
 </body>
 </html>
