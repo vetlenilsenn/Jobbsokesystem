@@ -4,7 +4,7 @@ include('../templates/header/header.php');
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
-    header('Location: login.php');
+    header('Location: ../reglog/login/login.php');
     exit();
 }
 ?>
@@ -21,9 +21,9 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
 
     <h2>Employer Options</h2>
     <ul>
-        <li><a href="arbeidsgiver_view_users.php">View users</a></li>
-        <li><a href="arbeidsgiver_nyapplication.php">Create New Job Application</a></li>
-        <li><a href="arbeidsgiver_applications.php">View Job Applications</a></li>
+        <li>Info side</li>
+        <li>You find more tools in the navigasjonbar</li>
+    
     </ul>
 </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
 // view_cv.php
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cvPath = isset($_POST['cv_path']) ? $_POST['cv_path'] : null;
 

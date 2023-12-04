@@ -1,6 +1,10 @@
 <?php
 //Kode for å inkludere header - Burde finne en bedre måte å inkludere på så man slipper å skrive om på hver side
 include '../../templates/header/header.php';
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>

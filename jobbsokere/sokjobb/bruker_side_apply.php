@@ -1,13 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
+    header('Location: ../../reglog/login/login.php');
     exit();
 }
-include('../templates/header/header.php');
-
-// Include your database connection file (adjust the path accordingly)
-require_once '../database/tilkobling.php';
+require_once '../../database/tilkobling.php';
+include('../../templates/header/header.php');
 
 // Fetch job application details
 try {
