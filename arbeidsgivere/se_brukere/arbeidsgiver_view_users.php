@@ -1,6 +1,11 @@
 <?php
+
+
+require_once '../../database/tilkobling.php';
 session_start();
-include('../templates/header/header.php');
+include('../../templates/header/header.php');
+
+
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
@@ -8,8 +13,6 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     exit();
 }
 
-// Include your database connection file (adjust the path accordingly)
-require_once '../database/tilkobling.php';
 
 // Fetch unique user categories from the users table
 try {

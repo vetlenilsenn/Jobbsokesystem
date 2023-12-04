@@ -34,18 +34,18 @@
             <?php
             if (isset($_SESSION['is_company']) && $_SESSION['is_company']) {
                 // Display company-specific menu items
-                echo '<li><a href="arbeidsgiver_side.php">Hjem</a></li>';
-                echo '<li><a href="arbeidsgiver_view_users.php">View Users</a></li>';
-                echo '<li><a href="arbeidsgiver_nyapplication.php">Create New Job Application</a></li>';
-                echo '<li><a href="arbeidsgiver_view_users.php">View Job Applications</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/arbeidsgiver_side.php">Hjem</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_brukere/arbeidsgiver_view_users.php">View Users</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/nyjobb/arbeidsgiver_nyapplication.php">Create New Job Application</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_applikasjoner/view_applicants.php">View Job Applications</a></li>';
             } elseif (isset($_SESSION['is_user']) && $_SESSION['is_user']) {
                 // Display regular user menu items
-                echo '<li><a href="bruker_side.php">Hjem</a></li>';
-                echo '<li><a href="bruker_info.php">Profil</a></li>';
+                echo '<li><a href="/jobbsokesystem/jobbsokere/sokjobb/bruker_side.php">Hjem</a></li>';
+                echo '<li><a href="/jobbsokesystem/jobbsokere/jobbsokerprofil/bruker_info.php">Profil</a></li>';
             } else {
                 // Display default menu items for users not logged in
-                echo '<li><a href="../../index.php">Hjem</a></li>';
-                echo '<li><a href=/jobbsokesystem/reglog/login/login.php">Logg inn</a></li>';
+                echo '<li><a href="/jobbsokesystem/index.php">Hjem</a></li>';
+                echo '<li><a href=/jobbsokesystem/reglog/login/login.php>Logg inn</a></li>';
             }
             ?>
         </ul>
@@ -54,7 +54,7 @@
         // Display logout link if a user is logged in
         if (isset($_SESSION['user'])) {
             echo '<div class="logout">';
-            echo '<a href="../reglog/login/logout.php">Logg ut</a>';
+            echo '<a href="/jobbsokesystem/reglog/login/logout.php">Logg ut</a>';
             echo '</div>';
         }
         

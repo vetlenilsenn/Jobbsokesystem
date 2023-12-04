@@ -1,6 +1,9 @@
 <?php
-require_once '../database/tilkobling.php';
+require_once '../../database/tilkobling.php';
+
 session_start();
+include('../../templates/header/header.php');
+
 
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {

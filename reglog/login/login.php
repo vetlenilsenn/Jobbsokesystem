@@ -76,6 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="Logg inn">
     </form>
 
-    <p>Har du ikke en konto? <a href="registration.php">Registrer deg her</a></p>
+    <p>Har du ikke en konto? <a href="../registrer/registration.php">Registrer deg her</a></p>
 </body>
 </html>
