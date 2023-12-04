@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Handle file upload
         if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
             $cvTempPath = $_FILES['cv']['tmp_name'];
-            $cvPath = '../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
+            $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
 
             // Move the uploaded file to the desired location
             if (move_uploaded_file($cvTempPath, $cvPath)) {
