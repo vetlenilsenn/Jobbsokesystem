@@ -6,31 +6,61 @@
     <title>Your Website</title>
     <style>
         /* CSS for the header */
+        body {
+            margin: 0; /* Remove default body margin */
+            font-family: 'Arial', sans-serif; /* Add a generic font family */
+        }
+
         .header {
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 10px; /* Add padding to the top and bottom */
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .menu {
             list-style: none;
             padding: 0;
+            margin: 0; /* Remove default margin for the menu */
         }
 
         .menu li {
             display: inline;
             margin-right: 20px;
+            padding: 5px; /* Add padding to the list items */
         }
 
-        .logout {
-            float: right;
+        .menu li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .menu li a:hover {
+            color: #ffcc00; /* Change link color on hover */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        .logout a {
+            text-decoration: none;
+            color: #ffcc00; /* Set logout link color */
+            padding: 10px;
+        }
+
+        .logout a:hover {
+            text-decoration: underline; /* Underline on hover for the logout link */
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <ul class="menu">
+        <div class="header-container">
+            <ul class="menu">
             <?php
             if (isset($_SESSION['is_company']) && $_SESSION['is_company']) {
                 // Display company-specific menu items
@@ -48,19 +78,22 @@
                 echo '<li><a href=/jobbsokesystem/reglog/login/login.php>Logg inn</a></li>';
             }
             ?>
-        </ul>
+            </ul>
 
-        <?php
-        // Display logout link if a user is logged in
-        if (isset($_SESSION['user'])) {
-            echo '<div class="logout">';
-            echo '<a href="/jobbsokesystem/reglog/login/logout.php">Logg ut</a>';
-            echo '</div>';
-        }
-        
-        ?>
+            <div class="logout">
+                <?php
+                // Display logout link if a user is logged in
+                if (isset($_SESSION['user'])) {
+                    echo '<a href="/jobbsokesystem/reglog/login/logout.php">Logg ut</a>';
+                }
+                ?>
+            </div>
+        </div>
     </div>
 
     <!-- The rest of your page's content goes here -->
 </body>
 </html>
+
+
+
