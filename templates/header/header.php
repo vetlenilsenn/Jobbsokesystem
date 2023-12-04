@@ -67,7 +67,7 @@
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/arbeidsgiver_side.php">Hjem</a></li>';
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_brukere/arbeidsgiver_view_users.php">View Users</a></li>';
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/nyjobb/arbeidsgiver_nyapplication.php">Create New Job Application</a></li>';
-                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_applikasjoner/view_applicants.php">View Job Applications</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_applikasjoner/arbeidsgiver_applications.php">View Job Applications</a></li>';
             } elseif (isset($_SESSION['is_user']) && $_SESSION['is_user']) {
                 // Display regular user menu items
                 echo '<li><a href="/jobbsokesystem/jobbsokere/sokjobb/bruker_side.php">Hjem</a></li>';
