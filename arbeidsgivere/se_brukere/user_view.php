@@ -23,7 +23,7 @@ try {
         exit();
     }
 } catch (PDOException $e) {
-    die("Error fetching user details: " . $e->getMessage());
+    die("Det skjedde en feil under hentingen av bruker detaljer: " . $e->getMessage());
 }
 ?>
 

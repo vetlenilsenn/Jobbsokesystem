@@ -11,9 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         readfile($cvPath);
         exit();
     } else {
-        echo "Invalid request.";
+        echo "Ugyldig forespørsel.";
     }
 } else {
-    echo "Invalid request.";
+    echo "Ugyldig forespørsel.";
 }
 ?>
