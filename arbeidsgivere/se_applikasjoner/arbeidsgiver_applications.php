@@ -24,6 +24,7 @@ try {
 ?>
 
 <!-- HTML content for displaying job applications -->
+<!-- HTML content for displaying job applications -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,10 +63,11 @@ try {
 
         .job-application form {
             display: inline-block;
+            margin-right: 10px; /* Add some margin between buttons */
         }
 
-        .job-application input[type="submit"] {
-            background-color: #4caf50;
+        .job-application .view-btn input[type="submit"] {
+            background-color: #4caf50; /* Green color for "Se Applikanter" button */
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -73,8 +75,21 @@ try {
             cursor: pointer;
         }
 
-        .job-application input[type="submit"]:hover {
+        .job-application .view-btn input[type="submit"]:hover {
             background-color: #45a049;
+        }
+
+        .job-application .delete-btn input[type="submit"] {
+            background-color: #ff4d4d; /* Red color for "Slett Annonse" button */
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .job-application .delete-btn input[type="submit"]:hover {
+            background-color: #ff3333;
         }
     </style>
 </head>
@@ -87,20 +102,20 @@ try {
                 <strong><?php echo $job['job_title']; ?></strong>
                 - <?php echo $job['job_description']; ?>
                 - <?php echo $job['location']; ?>
+                
                 <!-- Add a button to view applicants for this job -->
-                <form action="view_applicants.php" method="post">
+                <form action="view_applicants.php" method="post" class="view-btn">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
                     <input type="submit" value="Se Applikanter">
                 </form>
-                <form action="delete_job.php" method="post">
+                
+                <!-- Add a button to delete the job for this job -->
+                <form action="delete_job.php" method="post" class="delete-btn">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
-                    <input type="submit" class="delete-btn" value="Slett Annonse">
+                    <input type="submit" value="Slett Annonse">
                 </form>
             </li>
         <?php endforeach; ?>
     </ul>
 </body>
 </html>
-
-
-
