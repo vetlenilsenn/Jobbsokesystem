@@ -110,6 +110,5 @@ try {
             </li>
         <?php endforeach; ?>
     </ul>
-    <a href="arbeidsgiver_applications.php">Tilbake til applikasjonsoversikt</a></br>
 </body>
 </html>
