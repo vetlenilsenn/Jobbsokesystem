@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) {
 }
 require_once '../../database/tilkobling.php';
 
-
 // Fetch job application details
 try {
     $jobId = isset($_POST['job_id']) ? $_POST['job_id'] : null;
@@ -17,7 +16,10 @@ try {
         exit();
     }
 
-    $query = "SELECT * FROM job_applications WHERE application_id = :job_id";
+    $query = "SELECT job_applications.*, users.name AS contact_person_name, users.surname AS contact_person_surname, users.email AS contact_person_email
+              FROM job_applications 
+              JOIN users ON job_applications.user_id = users.user_id
+              WHERE job_applications.application_id = :job_id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':job_id', $jobId, PDO::PARAM_INT);
     $stmt->execute();
@@ -148,7 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><strong>Job Title:</strong> <?php echo $jobApplication['job_title']; ?></p>
     <p><strong>Job Description:</strong> <?php echo $jobApplication['job_description']; ?></p>
     <p><strong>Job Category:</strong> <?php echo $jobApplication['job_category']; ?></p>
-    <p><strong>Contact Person:</strong> <?php echo isset($jobApplication['contact_person']) ? $jobApplication['contact_person'] : 'N/A'; ?></p>
+    <p><strong>Contact Person:</strong> <?php echo isset($jobApplication['contact_person_name']) ? $jobApplication['contact_person_name'] . ' ' . $jobApplication['contact_person_surname'] : 'N/A'; ?></p>
+    <p><strong>Contact Email:</strong> <?php echo isset($jobApplication['contact_person_email']) ? $jobApplication['contact_person_email'] : 'N/A'; ?></p>
 
     <?php if (!empty($jobApplication['location'])): ?>
         <img class="map-image" src="https://www.mapquestapi.com/staticmap/v5/map?key=btjIKc7BBgW3hVRGcw34hVn7YYYDioce&size=600,400&locations=<?php echo urlencode($jobApplication['location']); ?>" alt="Kartutsnitt">
@@ -171,4 +174,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </body>
 </html>
-
