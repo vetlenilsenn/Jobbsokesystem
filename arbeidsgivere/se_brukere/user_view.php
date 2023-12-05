@@ -81,7 +81,7 @@ try {
 </head>
 <body>
     <?php include('../../templates/header/header.php'); ?>
-    <h2>User Details</h2>
+    <h2>Bruker Detaljer</h2>
     <div class="user-details">
         <!-- Display Smaller Profile Picture -->
         <?php
@@ -92,17 +92,17 @@ try {
         
         ?>
 <br> <!-- Break -->
-        <strong>Username:</strong> <?php echo $userDetails['username']; ?><br>
+        <strong>Brukernavn:</strong> <?php echo $userDetails['username']; ?><br>
         <strong>Email:</strong> <?php echo $userDetails['email']; ?><br>
-        <strong>Name:</strong> <?php echo $userDetails['name']; ?><br>
-        <strong>Surname:</strong> <?php echo $userDetails['surname']; ?><br>
-        <strong>User Category:</strong> <?php echo $userDetails['user_category']; ?><br>
+        <strong>Fornavn:</strong> <?php echo $userDetails['name']; ?><br>
+        <strong>Etternavn:</strong> <?php echo $userDetails['surname']; ?><br>
+        <strong>Bruker Kategori:</strong> <?php echo $userDetails['user_category']; ?><br>
 
         <!-- Button to View CV in a New Page -->
         <?php
         $cvPath = $userDetails['cv_path'];
         if (!empty($cvPath)) {
-            echo "<a href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\"><button>View CV</button></a>";
+            echo "<a href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\"><button>Se CV</button></a>";
         }
         ?>
         

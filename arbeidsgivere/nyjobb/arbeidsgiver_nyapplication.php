@@ -41,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Create job application
     if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
-        echo "Job application created successfully.";
+        echo "Jobb applikasjon er opprettet.";
     } else {
-        echo "Error creating job application.";
+        echo "Det skjedde en feil under opprettingen.";
     }
 }
 ?>
@@ -106,21 +106,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include('../../templates/header/header.php'); ?>
 
-    <h2>Create Job Application</h2>
+    <h2>Opprett Jobb Applikasjon</h2>
     <form action="arbeidsgiver_nyapplication.php" method="post" accept-charset="UTF-8">
-        <label for="job_title">Job Title:</label>
+        <label for="job_title">Jobb Tittel:</label>
         <input type="text" id="job_title" name="job_title" required>
 
-        <label for="job_description">Job Description:</label>
+        <label for="job_description">Jobb Beskrivelse:</label>
         <textarea id="job_description" name="job_description" required></textarea>
 
-        <label for="job_category">Job Category:</label>
+        <label for="job_category">Jobb Kategori:</label>
         <input type="text" id="job_category" name="job_category" required>
 
-        <label for="location">Location:</label>
+        <label for="location">Lokasjon:</label>
         <input type="text" id="location" name="location" required>
 
-        <input type="submit" value="Create Job Application">
+        <input type="submit" value="Opprett Jobb Applikasjon">
     </form>
 </body>
 </html>

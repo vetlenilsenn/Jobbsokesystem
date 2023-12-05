@@ -17,12 +17,12 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     <title>Arbeidsgiver Side</title>
 </head>
 <body>
-    <h1>Welcome to the Employer's Side, <?php echo $_SESSION['user']; ?>!</h1>
+    <h1>Velkommen til arbeidsgiver siden, <?php echo $_SESSION['user']; ?>!</h1>
 
-    <h2>Employer Options</h2>
+    <h2>Arbeidsgiver</h2>
     <ul>
         <li>Info side</li>
-        <li>You find more tools in the navigasjonbar</li>
+        <li>Navigasjonsbar</li>
     
     </ul>
 </body>
