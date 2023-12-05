@@ -1,6 +1,7 @@
 <?php
 require_once '../../database/tilkobling.php';
 
+
 //Funksjon for å opprette en ny bruker
 function createUser($username, $password, $email, $isCompany, $name, $surname) {
     global $pdo;
@@ -19,7 +20,8 @@ function createUser($username, $password, $email, $isCompany, $name, $surname) {
     return $stmt->execute();
 }
 
-//Funksjon for å opprette en ny bedrift med automatisk generert kontaktperson
+
+//Funksjoner som lager et nytt selskap og automatisk setter kontakt persjon basert på Navn og fornavn
 function createCompany($userId, $companyName, $name, $surname) {
     global $pdo;
 
@@ -35,7 +37,8 @@ function createCompany($userId, $companyName, $name, $surname) {
     return $stmt->execute();
 }
 
-//Sjekk om skjemaet er sendt inn
+
+//Sjekker om formen er sendt
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -45,19 +48,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $surname = $_POST['surname'];
 
+
     //Valider at passordene matcher
     if ($password !== $confirmPassword) {
         echo "Feil: Passord er ikke like.";
         exit();
     }
 
+
     //Opprett bruker
+
     if (createUser($username, $password, $email, $isCompany, $name, $surname)) {
         echo "Brukeropprettelse vellykket.<br>";
+
 
         //Hvis brukeren er en bedrift, opprett en bedrift med automatisk generert kontaktperson
         if ($isCompany) {
             $userId = $pdo->lastInsertId(); // Hent user_id for den nylig opprettede brukeren
+
             $companyName = $_POST['company_name'];
 
             if (createCompany($userId, $companyName, $name, $surname)) {

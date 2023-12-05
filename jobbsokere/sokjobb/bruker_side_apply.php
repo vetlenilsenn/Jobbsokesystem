@@ -6,37 +6,36 @@ if (!isset($_SESSION['user'])) {
 }
 require_once '../../database/tilkobling.php';
 
-// Fetch job application details
+//Henter applikasjons detaljer
 try {
     $jobId = isset($_POST['job_id']) ? $_POST['job_id'] : null;
     $userId = isset($_POST['user_id']) ? $_POST['user_id'] : null;
 
     if ($jobId === null || $userId === null) {
-        echo "Invalid request.";
+        echo "Invalid forespørsel.";
         exit();
     }
 
     $query = "SELECT job_applications.*, users.name AS contact_person_name, users.surname AS contact_person_surname, users.email AS contact_person_email
-              FROM job_applications 
-              JOIN users ON job_applications.user_id = users.user_id
-              WHERE job_applications.application_id = :job_id";
+            FROM job_applications 
+            JOIN users ON job_applications.user_id = users.user_id
+            WHERE job_applications.application_id = :job_id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':job_id', $jobId, PDO::PARAM_INT);
     $stmt->execute();
     $jobApplication = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$jobApplication) {
-        echo "Job application not found.";
+        echo "Jobb applikasjon kunne ikke hentes.";
         exit();
     }
 } catch (PDOException $e) {
-    die("Error fetching job application details: " . $e->getMessage());
+    die("Kunne ikke hente jobb applikasjon info: " . $e->getMessage());
 }
 
 
-// Rest of the HTML content for displaying job application details and the form for CV and application letter
+//HTML-innholdet for å vise detaljer om jobbsøknaden og skjemaet for CV og søknadsbrev
 ?>
-<!-- HTML content for displaying job application details and the form for CV and application letter -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,29 +105,29 @@ try {
 </head>
 <body>
     <?php include('../../templates/header/header.php'); 
-    // Process the form submission
+    //Prossesserer form submissionen
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if letter_text is set and not empty
+    //Sjekker om letter text er tomt
     $letterText = isset($_POST['letter_text']) ? $_POST['letter_text'] : null;
 
     if (!empty($letterText)) {
-        // Handle file upload
+        //Håndterer cv opplastning
         if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
-            // Validate file type and size
+            //validerer filtype og størrelse
             $allowedFileTypes = ['application/pdf'];
-            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+            $maxFileSize = 5 * 1024 * 1024; //5 MB
 
             if (!in_array($_FILES['cv']['type'], $allowedFileTypes) || $_FILES['cv']['size'] > $maxFileSize) {
-                echo "Invalid file type or size.";
+                echo "Feil fil type eller størrelse.";
                 exit();
             }
 
             $cvTempPath = $_FILES['cv']['tmp_name'];
-            $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
+            $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; 
 
-            // Move the uploaded file to the desired location
+            //Flytter den opplastede filen til den valge lokasjonen
             if (move_uploaded_file($cvTempPath, $cvPath)) {
-                // Insert into received_applications table
+                //Setter inn i reciebed applications table
                 try {
                     $insertQuery = "INSERT INTO received_applications (job_application_id, user_id, cv_path, letter_text, date_applied) 
                                     VALUES (:job_application_id, :user_id, :cv_path, :letter_text, NOW())";

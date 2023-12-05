@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobbsøk</title>
     <style>
-        /* CSS for the header */
         body {
-            margin: 0; /* Remove default body margin */
-            font-family: 'Arial', sans-serif; /* Add a generic font family */
+            margin: 0; 
+            font-family: 'Arial', sans-serif; 
         }
 
         .header {
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px; /* Add padding to the top and bottom */
+            padding: 10px;
         }
 
         .header-container {
@@ -27,13 +26,13 @@
         .menu {
             list-style: none;
             padding: 0;
-            margin: 0; /* Remove default margin for the menu */
+            margin: 0; 
         }
 
         .menu li {
             display: inline;
             margin-right: 20px;
-            padding: 5px; /* Add padding to the list items */
+            padding: 5px; 
         }
 
         .menu li a {
@@ -42,18 +41,18 @@
         }
 
         .menu li a:hover {
-            color: #ffcc00; /* Change link color on hover */
-            cursor: pointer; /* Change cursor to pointer on hover */
+            color: #ffcc00; 
+            cursor: pointer; 
         }
 
         .logout a {
             text-decoration: none;
-            color: #ffcc00; /* Set logout link color */
+            color: #ffcc00; 
             padding: 10px;
         }
 
         .logout a:hover {
-            text-decoration: underline; /* Underline on hover for the logout link */
+            text-decoration: underline; 
         }
     </style>
 </head>
@@ -63,17 +62,17 @@
             <ul class="menu">
             <?php
             if (isset($_SESSION['is_company']) && $_SESSION['is_company']) {
-                // Display company-specific menu items
+                //Info som viser for bedriftsbruker
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/arbeidsgiver_side.php">Hjem</a></li>';
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_brukere/arbeidsgiver_view_users.php">Se Brukere</a></li>';
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/nyjobb/arbeidsgiver_nyapplication.php">Oprett Ny Jobb Applikasjon</a></li>';
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_applikasjoner/arbeidsgiver_applications.php">Se Jobb Applikasjoner</a></li>';
             } elseif (isset($_SESSION['is_user']) && $_SESSION['is_user']) {
-                // Display regular user menu items
+                //Info som kommer for vanlig bruker
                 echo '<li><a href="/jobbsokesystem/jobbsokere/sokjobb/bruker_side.php">Hjem</a></li>';
                 echo '<li><a href="/jobbsokesystem/jobbsokere/jobbsokerprofil/bruker_info.php">Profil</a></li>';
             } else {
-                // Display default menu items for users not logged in
+                //Vises når du ikke er logget inn
                 echo '<li><a href="/jobbsokesystem/index.php">Hjem</a></li>';
                 echo '<li><a href=/jobbsokesystem/reglog/login/login.php>Logg inn</a></li>';
             }
@@ -82,7 +81,7 @@
 
             <div class="logout">
                 <?php
-                // Display logout link if a user is logged in
+                //Hvis man er logget inn vises log ut
                 if (isset($_SESSION['user'])) {
                     echo '<a href="/jobbsokesystem/reglog/login/logout.php">Logg ut</a>';
                 }
@@ -90,8 +89,6 @@
             </div>
         </div>
     </div>
-
-    <!-- The rest of your page's content goes here -->
 </body>
 </html>
 

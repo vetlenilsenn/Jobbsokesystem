@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
 
 require_once '../../database/tilkobling.php';
 
-// Fetch unique job categories from the database
+//Henter alle unique jobb kategorier fra databasen
 try {
     $categoryQuery = "SELECT DISTINCT job_category FROM job_applications";
     $categoryStmt = $pdo->query($categoryQuery);
@@ -16,26 +16,25 @@ try {
     die("Error fetching job categories: " . $e->getMessage());
 }
 
-// Initialize $selectedCategory
+//Setter selected category til å være en tom variabel
 $selectedCategory = '';
 
-// Fetch job applications from the database based on the selected category
+//Henter jobb applikasjoner fra databasen basert på valgt kategori
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category'])) {
     $selectedCategory = $_POST['selected_category'];
     
     try {
         if (!empty($selectedCategory)) {
-            // Modify the query to include the deadline condition
+            //Velger alle jobber innen kategorien som ikke er utgått
             $query = "SELECT * FROM job_applications 
-                      WHERE job_category = :job_category 
-                      AND deadline >= CURDATE()";  // Include deadline condition
+                    WHERE job_category = :job_category 
+                    AND deadline >= CURDATE()";  
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(':job_category', $selectedCategory, PDO::PARAM_STR);
         } else {
-            // If "No Category" is selected, fetch all job applications with deadline not passed
+            //Hvis ingen kategorier er valgt velger den alle som ikke er utgått
             $query = "SELECT * FROM job_applications 
-                      WHERE deadline >= CURDATE()";  // Include deadline condition
-            $stmt = $pdo->query($query);
+                    WHERE deadline >= CURDATE()";  
         }
 
         $stmt->execute();
@@ -44,14 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
         die("Error fetching job applications: " . $e->getMessage());
     }
 } else {
-    // Fetch all job applications initially with deadline not passed
+    //Henter alle jobber som ikke er utgått
     try {
         $allQuery = "SELECT * FROM job_applications 
-                     WHERE deadline >= CURDATE()";  // Include deadline condition
+                    WHERE deadline >= CURDATE()";
         $allStmt = $pdo->query($allQuery);
         $jobApplications = $allStmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
-        die("Error fetching job applications: " . $e->getMessage());
+        die("Feil under henting av jobb applikasjoner: " . $e->getMessage());
     }
 }
 ?>
@@ -128,11 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
 
     <h2>Jobbsøknader</h2>
 
-    <!-- Dropdown menu for selecting job category -->
+    <!-- Dropdown meny for å velge jobb kategori -->
     <form action="" method="post">
         <label for="category">Velg en jobbkatogori:</label>
         <select name="selected_category" id="category">
-            <option value="">Ingen kategori</option> <!-- Added "No Category" option -->
+            <option value="">Ingen kategori</option>
             <?php foreach ($jobCategories as $category) : ?>
                 <option value="<?php echo $category; ?>" <?php echo ($category == $selectedCategory) ? 'selected' : ''; ?>><?php echo $category; ?></option>
             <?php endforeach; ?>
