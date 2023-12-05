@@ -1,8 +1,8 @@
 <?php
 
-
-require_once '../../database/tilkobling.php';
 session_start();
+require_once '../../database/tilkobling.php';
+
 
 
 
@@ -81,14 +81,13 @@ try {
         }
 
         button {
-            padding: 8px 15px;
             background-color: #4CAF50;
             color: #fff;
+            cursor: pointer;
+            padding: 10px;
             border: none;
             border-radius: 4px;
-            cursor: pointer;
         }
-
         button:hover {
             background-color: #45a049;
         }
@@ -129,15 +128,16 @@ try {
     </form>
 
     <h2>Users with Searchable as True</h2>
-    <ul>
-        <?php foreach ($users as $user) : ?>
-            <li class="user-item">
-                <strong>Navn:</strong> <?php echo $user['name'] . ' ' . $user['surname']; ?><br>
-                <strong>User Category:</strong> <?php echo $user['user_category']; ?><br>
-                <strong>Profile Picture:</strong> <?php echo $user['profile_picture']; ?><br>
-                <!-- Add other user details as needed -->
-            </li>
-        <?php endforeach; ?>
-    </ul>
+<ul>
+    <?php foreach ($users as $user) : ?>
+        <li class="user-item">
+            <strong>Navn:</strong> <?php echo $user['name'] . ' ' . $user['surname']; ?><br>
+            <strong>User Category:</strong> <?php echo $user['user_category']; ?><br>
+            <strong>Email:</strong> <?php echo $user['email']; ?><br>
+            <a href="user_view.php?user_id=<?php echo $user['user_id']; ?>"><button>View User Details</button></a><br>
+            <!-- <a href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\"><button>View CV</button></a>" -->
+        </li>
+    <?php endforeach; ?>
+</ul>
 </body>
 </html>
