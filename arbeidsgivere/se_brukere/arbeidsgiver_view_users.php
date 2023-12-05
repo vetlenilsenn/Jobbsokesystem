@@ -6,14 +6,14 @@ require_once '../../database/tilkobling.php';
 
 
 
-// Check if the user is logged in and is an employer
+//Sjekker om brukeren er logget inn og er en arbeidsgiver
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../../reglog/login/login.php');
     exit();
 }
 
 
-// Fetch unique user categories from the users table
+//Henter unique bruker kateogrier fra bruker tableen
 try {
     $categoriesQuery = "SELECT DISTINCT user_category FROM users";
     $categoriesStmt = $pdo->query($categoriesQuery);
@@ -22,20 +22,20 @@ try {
     die("Det skjedde en feil under hentingen av bruker kategorier: " . $e->getMessage());
 }
 
-// Fetch users with searchable set to true and based on selected user_category
+//Henter alle brukere med searchable satt til true og som har kategori
 try {
     $selectedCategory = isset($_POST['user_category']) ? $_POST['user_category'] : '';
     
     $query = "SELECT * FROM users WHERE searchable = 1";
     
-    // If a specific user category is selected, add it to the query
+    //Hvis man har valgt en kategori sendes denne til quierein
     if (!empty($selectedCategory)) {
         $query .= " AND user_category = :user_category";
     }
 
     $stmt = $pdo->prepare($query);
 
-    // Bind parameters if a specific user category is selected
+    //Binder parameterne hvis kateogir er valgt
     if (!empty($selectedCategory)) {
         $stmt->bindParam(':user_category', $selectedCategory, PDO::PARAM_STR);
     }
@@ -96,7 +96,6 @@ try {
             list-style: none;
             padding: 0;
         }
-        /* Be more specific with a class, assuming your targeted li has a class like 'user-item' */
         
         li.user-item {
             background-color: #fff;
@@ -135,7 +134,6 @@ try {
             <strong>Bruker Kategori:</strong> <?php echo $user['user_category']; ?><br>
             <strong>Email:</strong> <?php echo $user['email']; ?><br>
             <a href="user_view.php?user_id=<?php echo $user['user_id']; ?>"><button>Se Bruker Detaljer</button></a><br>
-            <!-- <a href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\"><button>View CV</button></a>" -->
         </li>
     <?php endforeach; ?>
 </ul>

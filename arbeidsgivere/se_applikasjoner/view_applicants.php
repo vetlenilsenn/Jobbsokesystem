@@ -5,13 +5,13 @@ session_start();
 
 
 
-// Check if the user is logged in and is an employer
+//Sjekker om brukeren er logget inn og er en arbeidsgiver
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../../reglog/login/login.php');
     exit();
 }
 
-// Check if the job_application_id is set
+//sjekker om applikasjonsid er satt
 if (!isset($_POST['job_application_id'])) {
     echo "Ugyldig forespørsel.";
     exit();
@@ -19,7 +19,7 @@ if (!isset($_POST['job_application_id'])) {
 
 $jobApplicationId = $_POST['job_application_id'];
 
-// Fetch applicants for the selected job application with user details
+//henter alle applikanter med litt info
 try {
     $query = "SELECT ra.*, u.name, u.surname FROM received_applications ra
             JOIN users u ON ra.user_id = u.user_id
@@ -100,7 +100,6 @@ try {
         <?php foreach ($applicants as $applicant) : ?>
             <li class="applicant-li">
                 <strong>Navn:</strong> <?php echo $applicant['name'] . ' ' . $applicant['surname']; ?><br>
-                <!-- Replace CV display with a button to view CV in a new page tab -->
                 <form action="view_cv.php" method="post" target="_blank">
                     <input type="hidden" name="cv_path" value="<?php echo $applicant['cv_path']; ?>">
                     <button type="submit">Se CV</button>

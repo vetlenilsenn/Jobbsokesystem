@@ -5,42 +5,42 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // Get the application_id from the form submission
+        //Skaffer applikasjons id fra form submission
         $applicationId = isset($_POST['job_application_id']) ? $_POST['job_application_id'] : null;
 
-        // Validate application_id
+        //Validerer application id
         if ($applicationId === null) {
             throw new Exception('Invalid request. Application ID is missing.');
         }
 
-        // Delete from the received_applications table first
+        //Sletter fra recieved application table
         $receivedQuery = "DELETE FROM received_applications WHERE job_application_id = :application_id";
         $receivedStmt = $pdo->prepare($receivedQuery);
         $receivedStmt->bindParam(':application_id', $applicationId, PDO::PARAM_INT);
 
-        // Execute the delete query for received_applications
+        //Kjørere slett funkksjonen 
         $receivedStmt->execute();
 
-        // Now delete from the job_applications table
+        //Sletter så fra job_applications
         $jobQuery = "DELETE FROM job_applications WHERE application_id = :application_id";
         $jobStmt = $pdo->prepare($jobQuery);
         $jobStmt->bindParam(':application_id', $applicationId, PDO::PARAM_INT);
 
-        // Execute the delete query for job_applications
+        //Kjører slett funksjonen
         if ($jobStmt->execute()) {
-            // Job application deleted successfully
-            header('Location: arbeidsgiver_applications.php'); // Redirect back to applications side
+            //Slettet suksessfull
+            header('Location: arbeidsgiver_applications.php'); //Blir værende på siden
             exit();
         } else {
             throw new Exception('Feil under sletting av jobb applikasjon.');
         }
     } catch (Exception $e) {
-        // Handle exceptions, log errors, or redirect to an error page
+        //Error håndtering
         echo 'Error: ' . $e->getMessage();
         exit();
     }
 } else {
-    // Redirect to an error page if accessed through GET or without necessary parameters
+    //Blir på samme side men sender ut en feil melding
     header('Location: arbeidsgiver_applications.php');
     echo 'Feil under sletting.';
     exit();

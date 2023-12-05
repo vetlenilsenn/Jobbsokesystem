@@ -2,7 +2,7 @@
 session_start();
 include('../templates/header/header.php');
 
-// Check if the user is logged in and is an employer
+//Sjekker om brukeren er logget in og er en arbeidsgiver
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../reglog/login/login.php');
     exit();

@@ -2,13 +2,13 @@
 session_start();
 require_once '../../database/tilkobling.php';
 
-// Check if the user is logged in and is an employer
+//Sjekker om brukeren er logget in og er en arbeidsgiver
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../../reglog/login/login.php');
     exit();
 }
 
-// Fetch user information based on user_id
+//Henter bruker info basert på user id
 try {
     $userId = $_GET['user_id'];
 
@@ -59,7 +59,7 @@ try {
         }
 
         img {
-            max-width: 200px;  /* Adjust the size as needed */
+            max-width: 200px;  
             height: auto;
             margin-bottom: 15px;
             border-radius: 8px;
@@ -83,7 +83,7 @@ try {
     <?php include('../../templates/header/header.php'); ?>
     <h2>Bruker Detaljer</h2>
     <div class="user-details">
-        <!-- Display Smaller Profile Picture -->
+
         <?php
         $profilePicturePath = $userDetails['profile_picture'];
         if (!empty($profilePicturePath)) {
@@ -91,14 +91,13 @@ try {
         }
         
         ?>
-<br> <!-- Break -->
+<br> 
         <strong>Brukernavn:</strong> <?php echo $userDetails['username']; ?><br>
         <strong>Email:</strong> <?php echo $userDetails['email']; ?><br>
         <strong>Fornavn:</strong> <?php echo $userDetails['name']; ?><br>
         <strong>Etternavn:</strong> <?php echo $userDetails['surname']; ?><br>
         <strong>Bruker Kategori:</strong> <?php echo $userDetails['user_category']; ?><br>
 
-        <!-- Button to View CV in a New Page -->
         <?php
         $cvPath = $userDetails['cv_path'];
         if (!empty($cvPath)) {

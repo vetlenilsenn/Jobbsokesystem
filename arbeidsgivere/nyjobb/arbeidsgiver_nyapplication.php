@@ -3,17 +3,17 @@ require_once '../../database/tilkobling.php';
 
 session_start();
 
-// Check if the user is logged in and is an employer
+//Sjekker om brukeren er logget inn og er et selskap
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../../reglog/login/login.php');
     exit();
 }
 
-// Function to create a new job application
+//Funksjon for å lage ny jobb applikasjon
 function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $jobCategory, $location, $deadline) {
     global $pdo;
 
-    // Retrieve company name from the session
+    //Henter company navn fra sessiosen
     $companyName = $_SESSION['company_name'];
 
     $query = "INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category, company_name, location, deadline) 
@@ -32,7 +32,6 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
 }
 ?>
 
-<!-- HTML Form for Job Application Creation -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,15 +91,15 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
 <?php include('../../templates/header/header.php'); ?>
     <h2>Opprett Jobb Applikasjon</h2>
     <?php
-    // Check if the form is submitted
+    //Sjekker om formen er postet
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $jobTitle = filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING);
         $jobDescription = filter_input(INPUT_POST, 'job_description', FILTER_SANITIZE_STRING);
         $jobCategory = filter_input(INPUT_POST, 'job_category', FILTER_SANITIZE_STRING);
         $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
-        $deadline = $_POST['deadline']; // No need for filtering as it's a date input
+        $deadline = $_POST['deadline']; 
 
-        // Create job application
+        //Opprett jobb applikasjoner
         if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location, $deadline)) {
             echo "Jobb applikasjon er opprettet.";
         } else {

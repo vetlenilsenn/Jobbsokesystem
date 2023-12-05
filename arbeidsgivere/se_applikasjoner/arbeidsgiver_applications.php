@@ -23,7 +23,6 @@ try {
 }
 ?>
 
-<!-- HTML-innhold for visning av jobbsøknader -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,11 +61,11 @@ try {
 
         .job-application form {
             display: inline-block;
-            margin-right: 10px; /* Legg til litt margin mellom knappene */
+            margin-right: 10px; 
         }
 
         .job-application .view-btn input[type="submit"] {
-            background-color: #4caf50; /* Grønn farge for "Se Applikanter"-knappen */
+            background-color: #4caf50; 
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -79,7 +78,7 @@ try {
         }
 
         .job-application .delete-btn input[type="submit"] {
-            background-color: #ff4d4d; /* Rød farge for "Slett Annonse"-knappen */
+            background-color: #ff4d4d; 
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -102,13 +101,11 @@ try {
                 - <?php echo $job['job_description']; ?>
                 - <?php echo $job['location']; ?>
                 
-                <!-- Legg til en knapp for å se søkere for denne jobben -->
                 <form action="view_applicants.php" method="post" class="view-btn">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
                     <input type="submit" value="Se Applikanter">
                 </form>
                 
-                <!-- Legg til en knapp for å slette annonsen for denne jobben -->
                 <form action="delete_job.php" method="post" class="delete-btn">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
                     <input type="submit" value="Slett Annonse">
