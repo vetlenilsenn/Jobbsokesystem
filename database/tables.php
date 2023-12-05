@@ -75,6 +75,7 @@ $sqlCreateJobApplicationsTable = "CREATE TABLE IF NOT EXISTS job_applications (
     job_description TEXT NOT NULL, -- Add job_description field
     job_category VARCHAR(50) NOT NULL, -- Add job_category field
     location VARCHAR(100), -- Add location field
+    deadline DATE, -- Date for deadline
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (company_id) REFERENCES companies(company_id)
 )";
