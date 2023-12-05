@@ -21,8 +21,8 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
 
     <h2>Arbeidsgiver</h2>
     <ul>
-        <li>Info side</li>
-        <li>Navigasjonsbar</li>
+        <p>Info side</p></br>
+        <p2>Her ville vi lagt til en nyhetsside for oppdateringer og diverse info om systemet</p2>
     
     </ul>
 </body>
