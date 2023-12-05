@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Page</title>
+    <title>Bruker side</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -112,19 +112,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
 </head>
 <body>
     <?php include('../../templates/header/header.php'); ?>
-    <h1>Welcome to the user page, <?php echo $_SESSION['user']; ?>!</h1>
+    <h1>Velkommen til brukersiden, <?php echo $_SESSION['user']; ?>!</h1>
     
-    <h2>Job Applications</h2>
+    <h2>Jobbsøknader</h2>
 
     <!-- Dropdown menu for selecting job category -->
     <form action="" method="post">
-        <label for="category">Select Job Category:</label>
+        <label for="category">Velg en jobbkatogori:</label>
         <select name="selected_category" id="category">
             <?php foreach ($jobCategories as $category) : ?>
                 <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
             <?php endforeach; ?>
         </select>
-        <input type="submit" value="Search">
+        <input type="submit" value="Søk">
     </form>
 
     <ul>
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
                 <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                 <!-- Remove the letter_text field -->
-                <input type="submit" value="View and Apply">
+                <input type="submit" value="Se og søk">
             </form>
         </li>
     <?php endforeach; ?>

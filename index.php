@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Job Applications</title>
+    <title>Jobbsøknader</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,7 +35,7 @@
 
 <body>
     <?php include('templates/header/header.php'); ?>
-    <h2>Job Applications</h2>
+    <h2>Jobbsøknader</h2>
 
     <?php
     // Include your database connection script here using PDO
@@ -57,7 +57,7 @@
         // Display the data in a table
         if ($jobApplications) {
             echo '<table>';
-            echo '<tr><th>Job Title</th><th>Company Name</th><th>Job Description</th><th>Job Category</th></tr>';
+            echo '<tr><th>Titel</th><th>Bedrift</th><th>Jobb beskrivelse</th><th>Jobb kategori</th></tr>';
             foreach ($jobApplications as $application) {
                 echo '<tr>';
                 echo '<td>' . $application['job_title'] . '</td>';
