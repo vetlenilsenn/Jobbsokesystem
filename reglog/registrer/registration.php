@@ -48,13 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate that passwords match
     if ($password !== $confirmPassword) {
-        echo "Error: Passwords do not match.";
+        echo "Error: Passord er ikke like.";
         exit();
     }
 
     // Create user
     if (createUser($username, $password, $email, $isCompany, $name, $surname)) {
-        echo "User created successfully.<br>";
+        echo "Bruker opprettelse vellykket.<br>";
 
         // If the user is a company, create a company with auto-generated contact_person
         if ($isCompany) {
@@ -62,13 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $companyName = $_POST['company_name'];
 
             if (createCompany($userId, $companyName, $name, $surname)) {
-                echo "Company created successfully.";
+                echo "Bedrift opprettelse vellykket.";
             } else {
-                echo "Error creating company.";
+                echo "Feil ved opprettelse av Bedrift.";
             }
         }
     } else {
-        echo "Error creating user.";
+        echo "Feil ved opprettelse av bruker.";
     }
 }
 ?>
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User and Company Registration</title>
+    <title>Bruker og bedrift registrering</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -147,33 +147,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include('../../templates/header/header.php'); ?>
     
-    <h2>User and Company Registration</h2>
+    <h2>Bruker og bedrift registrering</h2>
     <form action="registration.php" method="post" accept-charset="UTF-8">
-        <label for="name">Name:</label>
+        <label for="name">Navn:</label>
         <input type="text" id="name" name="name" required>
         <br>
-        <label for="surname">Surname:</label>
+        <label for="surname">Etternavn:</label>
         <input type="text" id="surname" name="surname" required>
         <br>
-        <label for="username">Username:</label>
+        <label for="username">Brukernavn:</label>
         <input type="text" id="username" name="username" required>
         <br>
-        <label for="password">Password:</label>
+        <label for="password">Passord:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <label for="confirm_password">Confirm Password:</label>
+        <label for="confirm_password">Bekreft Password:</label>
         <input type="password" id="confirm_password" name="confirm_password" required>
         <br>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
         <br>
         <input type="checkbox" id="is_company" name="is_company" value="1">
-        <label for="is_company">Is this a company?</label>
+        <label for="is_company">Er dette en bedrift?</label>
         <br>
-        <label for="company_name">Company Name:</label>
+        <label for="company_name">Bedrift navn:</label>
         <input type="text" id="company_name" name="company_name">
         <br>
-        <input type="submit" value="Create User and Company">
+        <input type="submit" value="Lag bruker og bedrift">
     </form>
     <p>Har du allerede en konto? <a href="../login/login.php"> Logg inn her</a></p>
 </body>
