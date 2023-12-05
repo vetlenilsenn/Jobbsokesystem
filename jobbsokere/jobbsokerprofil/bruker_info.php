@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
 
 require_once '../../database/tilkobling.php';
 
-// Fetch user information
+//Henter bruker informasjon
 try {
     $userId = $_SESSION['user_id'];
 
@@ -25,30 +25,30 @@ try {
     die("Det skjedde en feil under hentingen av bruker info: " . $e->getMessage());
 }
 
-// Process form submission for updating user information
+//Prossessere form submissionen
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle file uploads
+    //Håndterer fil opplastning
     $cvPath = $userInfo['cv_path'];
     $profilePicturePath = $userInfo['profile_picture'];
 
     if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
         // Handle CV file upload
         $cvTempPath = $_FILES['cv']['tmp_name'];
-        $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
+        $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf';
         move_uploaded_file($cvTempPath, $cvPath);
     }
 
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
-        // Handle profile picture file upload
+        //Håndtererer bilde opplastning
         $profilePictureTempPath = $_FILES['profile_picture']['tmp_name'];
-        $profilePicturePath = '../../uploads/profile_picture_' . $userId . '_' . time() . '.jpg'; // Adjust the path and filename as needed
+        $profilePicturePath = '../../uploads/profile_picture_' . $userId . '_' . time() . '.jpg'; 
         move_uploaded_file($profilePictureTempPath, $profilePicturePath);
     }
 
-    // Update user information including CV and profile picture paths
+    //Oppdater bruker info
     try {
-        // Update searchable and user category
-        $searchable = isset($_POST['searchable']) ? 1 : 0; // Convert to boolean
+        //Oppdaterer searchable og bruker kateogri
+        $searchable = isset($_POST['searchable']) ? 1 : 0;
         $userCategory = isset($_POST['user_category']) ? $_POST['user_category'] : $userInfo['user_category'];
 
         $updateQuery = "UPDATE users 
@@ -76,7 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- HTML content for bruker_info.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><strong>Brukernavn:</strong> <?php echo $userInfo['username']; ?></p>
 
     <?php
-    // Display profile picture if available
+    //Skriver ut bildet om det er et
     $profilePicturePath = $userInfo['profile_picture'];
     if (!empty($profilePicturePath)) {
         echo "<img class='profile-picture' src=\"$profilePicturePath\" alt=\"Profile Picture\">";
@@ -213,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="Oppdater Informasjon">
 
         <?php
-        // Add a button to view CV in a new page
+        //Cv knapp
         $cvPath = $userInfo['cv_path'];
         if (!empty($cvPath)) {
             echo "<a class='cv-button' href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\">Se CV</a>";

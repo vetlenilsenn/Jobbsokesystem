@@ -2,7 +2,7 @@
 require_once '../../database/tilkobling.php';
 
 
-// Function to create a new user
+//Funksjoner for å opprette bruker
 function createUser($username, $password, $email, $isCompany, $name, $surname) {
     global $pdo;
 
@@ -20,11 +20,11 @@ function createUser($username, $password, $email, $isCompany, $name, $surname) {
     return $stmt->execute();
 }
 
-// Function to create a new company with auto-generated contact_person
+//Funksjoner som lager et nytt selskap og automatisk setter kontakt persjon basert på Navn og fornavn
 function createCompany($userId, $companyName, $name, $surname) {
     global $pdo;
 
-    // Auto-generate contact_person based on name and surname
+    //auto generer dette
     $contactPerson = $name . ' ' . $surname;
 
     $query = "INSERT INTO companies (user_id, company_name, contact_person) VALUES (:user_id, :company_name, :contact_person)";
@@ -36,7 +36,7 @@ function createCompany($userId, $companyName, $name, $surname) {
     return $stmt->execute();
 }
 
-// Check if the form is submitted
+//Sjekker om formen er sendt
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -46,19 +46,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $surname = $_POST['surname'];
 
-    // Validate that passwords match
+    //Validerer passord mot confirm assord
     if ($password !== $confirmPassword) {
         echo "Error: Passord er ikke like.";
         exit();
     }
 
-    // Create user
+    //Lager bruker
     if (createUser($username, $password, $email, $isCompany, $name, $surname)) {
         echo "Bruker opprettelse vellykket.<br>";
 
-        // If the user is a company, create a company with auto-generated contact_person
+        //Hvis burker er selskap set company name
         if ($isCompany) {
-            $userId = $pdo->lastInsertId(); // Get the user_id of the newly created user
+            $userId = $pdo->lastInsertId();
             $companyName = $_POST['company_name'];
 
             if (createCompany($userId, $companyName, $name, $surname)) {
