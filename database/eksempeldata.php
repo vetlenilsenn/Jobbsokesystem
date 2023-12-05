@@ -15,8 +15,8 @@ $companiesData = [
 
 // Example data for job_applications table
 $jobApplicationsData = [
-    ['user_id' => 2, 'company_id' => 1, 'job_title' => 'Software Developer', 'company_name' => 'ABC Corp', 'job_description' => 'Developing software applications', 'job_category' => 'IT', 'location' => 'City A'],
-    ['user_id' => 2, 'company_id' => 1, 'job_title' => 'Marketing Specialist', 'company_name' => 'XYZ Ltd', 'job_description' => 'Marketing and promotion', 'job_category' => 'Marketing', 'location' => 'City B']
+    ['user_id' => 2, 'company_id' => 1, 'job_title' => 'Software Developer', 'company_name' => 'ABC Corp', 'job_description' => 'Developing software applications', 'job_category' => 'IT', 'location' => 'City A', 'deadline' => '2023-12-31'],
+    ['user_id' => 2, 'company_id' => 1, 'job_title' => 'Marketing Specialist', 'company_name' => 'XYZ Ltd', 'job_description' => 'Marketing and promotion', 'job_category' => 'Marketing', 'location' => 'City B', 'deadline' => '2023-12-31']
 ];
 
 // Example data for received_applications table
@@ -41,7 +41,7 @@ foreach ($companiesData as $companyData) {
 
 // Insert example data into job_applications table
 foreach ($jobApplicationsData as $jobApplicationData) {
-    $insertQuery = "INSERT INTO job_applications (user_id, company_id, job_title, company_name, job_description, job_category, location) VALUES (:user_id, :company_id, :job_title, :company_name, :job_description, :job_category, :location)";
+    $insertQuery = "INSERT INTO job_applications (user_id, company_id, job_title, company_name, job_description, job_category, location, deadline) VALUES (:user_id, :company_id, :job_title, :company_name, :job_description, :job_category, :location, :deadline)";
     $stmt = $pdo->prepare($insertQuery);
     $stmt->execute($jobApplicationData);
 }
