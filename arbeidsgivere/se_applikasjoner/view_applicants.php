@@ -103,7 +103,7 @@ try {
                 <!-- Replace CV display with a button to view CV in a new page tab -->
                 <form action="view_cv.php" method="post" target="_blank">
                     <input type="hidden" name="cv_path" value="<?php echo $applicant['cv_path']; ?>">
-                    <button type="submit">View CV</button>
+                    <button type="submit">Se CV</button>
                 </form>
                 <strong>Søknadsbrev:</strong> <?php echo $applicant['letter_text']; ?><br>
                 <strong>Innsendt dato:</strong> <?php echo $applicant['date_applied']; ?><br>

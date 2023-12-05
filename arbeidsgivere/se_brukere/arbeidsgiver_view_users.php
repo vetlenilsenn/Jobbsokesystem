@@ -115,26 +115,26 @@ try {
 </head>
 <body>
     <?php include('../../templates/header/header.php'); ?>
-    <h2>Filter by User Category</h2>
+    <h2>Filtrer basert på Bruker Kategori</h2>
     <form action="arbeidsgiver_view_users.php" method="post">
-        <label for="user_category">Select User Category:</label>
+        <label for="user_category">Velg Bruker Kategori:</label>
         <select id="user_category" name="user_category">
-            <option value="">All Categories</option>
+            <option value="">Alle Kategorier</option>
             <?php foreach ($categories as $category) : ?>
                 <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
             <?php endforeach; ?>
         </select>
-        <button type="submit">Filter</button>
+        <button type="submit">Filtrer</button>
     </form>
 
-    <h2>Users with Searchable as True</h2>
+    <h2>Brukere som har skrudd på søk</h2>
 <ul>
     <?php foreach ($users as $user) : ?>
         <li class="user-item">
             <strong>Navn:</strong> <?php echo $user['name'] . ' ' . $user['surname']; ?><br>
-            <strong>User Category:</strong> <?php echo $user['user_category']; ?><br>
+            <strong>Bruker Kategori:</strong> <?php echo $user['user_category']; ?><br>
             <strong>Email:</strong> <?php echo $user['email']; ?><br>
-            <a href="user_view.php?user_id=<?php echo $user['user_id']; ?>"><button>View User Details</button></a><br>
+            <a href="user_view.php?user_id=<?php echo $user['user_id']; ?>"><button>Se Bruker Detaljer</button></a><br>
             <!-- <a href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\"><button>View CV</button></a>" -->
         </li>
     <?php endforeach; ?>

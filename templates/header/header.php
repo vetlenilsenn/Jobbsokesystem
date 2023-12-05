@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website</title>
+    <title>Jobbsøk</title>
     <style>
         /* CSS for the header */
         body {
@@ -65,9 +65,9 @@
             if (isset($_SESSION['is_company']) && $_SESSION['is_company']) {
                 // Display company-specific menu items
                 echo '<li><a href="/jobbsokesystem/arbeidsgivere/arbeidsgiver_side.php">Hjem</a></li>';
-                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_brukere/arbeidsgiver_view_users.php">View Users</a></li>';
-                echo '<li><a href="/jobbsokesystem/arbeidsgivere/nyjobb/arbeidsgiver_nyapplication.php">Create New Job Application</a></li>';
-                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_applikasjoner/arbeidsgiver_applications.php">View Job Applications</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_brukere/arbeidsgiver_view_users.php">Se Brukere</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/nyjobb/arbeidsgiver_nyapplication.php">Oprett Ny Jobb Applikasjon</a></li>';
+                echo '<li><a href="/jobbsokesystem/arbeidsgivere/se_applikasjoner/arbeidsgiver_applications.php">Se Jobb Applikasjoner</a></li>';
             } elseif (isset($_SESSION['is_user']) && $_SESSION['is_user']) {
                 // Display regular user menu items
                 echo '<li><a href="/jobbsokesystem/jobbsokere/sokjobb/bruker_side.php">Hjem</a></li>';

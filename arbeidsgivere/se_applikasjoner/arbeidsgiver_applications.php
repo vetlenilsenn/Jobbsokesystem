@@ -29,7 +29,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Applications</title>
+    <title>Jobb Applikasjoner</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,7 +80,7 @@ try {
 </head>
 <body>
     <?php include('../../templates/header/header.php'); ?>
-    <h2>Job Applications</h2>
+    <h2>Jobb Applikasjoner</h2>
     <ul>
         <?php foreach ($jobApplications as $job) : ?>
             <li class="job-application">
@@ -90,7 +90,7 @@ try {
                 <!-- Add a button to view applicants for this job -->
                 <form action="view_applicants.php" method="post">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
-                    <input type="submit" value="View Applicants">
+                    <input type="submit" value="Se Applikanter">
                 </form>
             </li>
         <?php endforeach; ?>
