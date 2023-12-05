@@ -32,20 +32,6 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
     return $stmt->execute();
 }
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $jobTitle = $_POST['job_title'];
-    $jobDescription = $_POST['job_description'];
-    $jobCategory = $_POST['job_category'];
-    $location = $_POST['location']; // Added location field
-
-    // Create job application
-    if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
-        echo "Jobb applikasjon er opprettet.";
-    } else {
-        echo "Det skjedde en feil under opprettingen.";
-    }
-}
 ?>
 
 <!-- HTML Form for Job Application Creation -->
@@ -104,7 +90,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <?php include('../../templates/header/header.php'); ?>
+    <?php include('../../templates/header/header.php'); 
+    // Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $jobTitle = $_POST['job_title'];
+    $jobDescription = $_POST['job_description'];
+    $jobCategory = $_POST['job_category'];
+    $location = $_POST['location']; // Added location field
+
+    // Create job application
+    if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
+        echo "Jobb applikasjon er opprettet.";
+    } else {
+        echo "Det skjedde en feil under opprettingen.";
+    }
+}?>
 
     <h2>Opprett Jobb Applikasjon</h2>
     <form action="arbeidsgiver_nyapplication.php" method="post" accept-charset="UTF-8">
