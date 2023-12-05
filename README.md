@@ -16,6 +16,7 @@
      - `is_company`: Indicates if the user is a company.
      - `profile_picture`: profil picture
      - `searchable`: Whether or not a company can search for the user
+     - `cv_path`: A path to the users cv. Set to null as default
 
 2. **companies Table:**
    - Stores details of companies.
