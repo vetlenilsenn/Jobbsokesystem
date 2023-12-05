@@ -47,13 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Oppdater bruker info
     try {
-        //Oppdaterer searchable og bruker kateogri
-        $searchable = isset($_POST['searchable']) ? 1 : 0;
+
+        ///Oppdaterer searchable og bruker kateogri
+        $searchable = isset($_POST['searchable']) ? 1 : 0; 
+
         $userCategory = isset($_POST['user_category']) ? $_POST['user_category'] : $userInfo['user_category'];
+        $newName = isset($_POST['new_name']) ? $_POST['new_name'] : $userInfo['name'];
+        $newSurname = isset($_POST['new_surname']) ? $_POST['new_surname'] : $userInfo['surname'];
+        $newEmail = isset($_POST['new_email']) ? $_POST['new_email'] : $userInfo['email'];
 
         $updateQuery = "UPDATE users 
                         SET searchable = :searchable, 
                             user_category = :user_category, 
+                            name = :new_name,
+                            surname = :new_surname,
+                            email = :new_email,
                             cv_path = :cv_path, 
                             profile_picture = :profile_picture 
                         WHERE user_id = :user_id";
@@ -61,12 +69,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateStmt = $pdo->prepare($updateQuery);
         $updateStmt->bindParam(':searchable', $searchable, PDO::PARAM_INT);
         $updateStmt->bindParam(':user_category', $userCategory, PDO::PARAM_STR);
+        $updateStmt->bindParam(':new_name', $newName, PDO::PARAM_STR);
+        $updateStmt->bindParam(':new_surname', $newSurname, PDO::PARAM_STR);
+        $updateStmt->bindParam(':new_email', $newEmail, PDO::PARAM_STR);
         $updateStmt->bindParam(':cv_path', $cvPath, PDO::PARAM_STR);
         $updateStmt->bindParam(':profile_picture', $profilePicturePath, PDO::PARAM_STR);
         $updateStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
 
         if ($updateStmt->execute()) {
+
             echo "Bruker info oppdatert.";
+            // Refresh the page after a successful update
+            echo "<meta http-equiv='refresh' content='0'>";
+
         } else {
             echo "Det skjedde en feil under oppdateringen av bruker info.";
         }
