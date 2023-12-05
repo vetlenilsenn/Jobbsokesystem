@@ -38,11 +38,11 @@
     <h2>Jobbsøknader</h2>
 
     <?php
-    // Include your database connection script here using PDO
-    include('database/tilkobling.php'); // Adjust the path as needed
+    //Database connection
+    include('database/tilkobling.php');
 
     try {
-        // Fetch job applications data with company details and filter out past deadlines
+        //Henter jobb applikasjoner sin data med "company" detaljer og filterer ut basert på deadlines
         $stmt = $pdo->query("
             SELECT 
                 ja.job_title,
@@ -56,7 +56,7 @@
         ");
         $jobApplications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Display the data in a table
+        //Displayer dataen i tabbelen
         if ($jobApplications) {
             echo '<table>';
             echo '<tr><th>Tittel</th><th>Bedrift</th><th>Jobb beskrivelse</th><th>Jobb kategori</th><th>Søknadsfrist</th></tr>';
@@ -71,7 +71,7 @@
             }
             echo '</table>';
         } else {
-            echo 'No job applications found.';
+            echo 'Ingen jobb applikasjoner funnet.';
         }
 
     } catch (PDOException $e) {
