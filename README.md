@@ -38,7 +38,7 @@
      - `job_description`: Description of the job
      - `job_category`: Category of the job
      - `location`: location field
-     - 'deadline': YYYY-MM-DD date of deadline
+     - `deadline`: YYYY-MM-DD date of deadline
      - *Foreign Keys:* Link to `user_id` in users table and `company_id` in companies table.
 
 4. **received_applications Table:**
