@@ -92,6 +92,10 @@ try {
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
                     <input type="submit" value="Se Applikanter">
                 </form>
+                <form action="delete_job.php" method="post">
+                    <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
+                    <input type="submit" class="delete-btn" value="Slett Annonse">
+                </form>
             </li>
         <?php endforeach; ?>
     </ul>
