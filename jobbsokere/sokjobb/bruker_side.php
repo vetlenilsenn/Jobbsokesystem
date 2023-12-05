@@ -25,12 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
     
     try {
         if (!empty($selectedCategory)) {
-            $query = "SELECT * FROM job_applications WHERE job_category = :job_category";
+            // Modify the query to include the deadline condition
+            $query = "SELECT * FROM job_applications 
+                      WHERE job_category = :job_category 
+                      AND deadline >= CURDATE()";  // Include deadline condition
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(':job_category', $selectedCategory, PDO::PARAM_STR);
         } else {
-            // If "No Category" is selected, fetch all job applications
-            $query = "SELECT * FROM job_applications";
+            // If "No Category" is selected, fetch all job applications with deadline not passed
+            $query = "SELECT * FROM job_applications 
+                      WHERE deadline >= CURDATE()";  // Include deadline condition
             $stmt = $pdo->query($query);
         }
 
@@ -40,9 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
         die("Error fetching job applications: " . $e->getMessage());
     }
 } else {
-    // Fetch all job applications initially
+    // Fetch all job applications initially with deadline not passed
     try {
-        $allQuery = "SELECT * FROM job_applications";
+        $allQuery = "SELECT * FROM job_applications 
+                     WHERE deadline >= CURDATE()";  // Include deadline condition
         $allStmt = $pdo->query($allQuery);
         $jobApplications = $allStmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -104,24 +109,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
         }
 
         .job-application-item {
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin: 10px 0;
-        padding: 15px;
-        border-radius: 4px;
-        text-align: left;
-    }
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: left;
+        }
 
-    .job-application-item strong {
-        color: #333;
-    }
+        .job-application-item strong {
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <?php include('../../templates/header/header.php'); ?>
     <h1>Velkommen til brukersiden, <?php echo $_SESSION['user']; ?>!</h1>
 
-    
     <h2>Jobbsøknader</h2>
 
     <!-- Dropdown menu for selecting job category -->
@@ -137,17 +141,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
     </form>
 
     <ul>
-    <?php foreach ($jobApplications as $job) : ?>
-        <li class="job-application-item">
-            <strong><?php echo $job['job_title']; ?></strong>
-            - <?php echo $job['job_description']; ?>
-            <form action="bruker_side_apply.php" method="post">
-                <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
-                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                <input type="submit" value="Se og søk">
-            </form>
-        </li>
-    <?php endforeach; ?>
+        <?php foreach ($jobApplications as $job) : ?>
+            <li class="job-application-item">
+                <strong><?php echo $job['job_title']; ?></strong>
+                - <?php echo $job['job_description']; ?>
+                <br>
+                <strong>Søknadsfrist:</strong> <?php echo $job['deadline']; ?>
+                <form action="bruker_side_apply.php" method="post">
+                    <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                    <input type="submit" value="Se og søk">
+                </form>
+            </li>
+        <?php endforeach; ?>
     </ul>
 </body>
 </html>
