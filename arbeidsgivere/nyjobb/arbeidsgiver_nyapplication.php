@@ -40,7 +40,7 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Job Application</title>
+    <title>Oprett Jobb Applikasjon</title>
     <style>
         body {
             font-family: Arial, sans-serif;

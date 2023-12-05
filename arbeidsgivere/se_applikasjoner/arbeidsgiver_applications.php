@@ -19,7 +19,7 @@ try {
     $stmt->execute();
     $jobApplications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Error fetching job applications: " . $e->getMessage());
+    die("Det skjedde en feil under hentingen av applikasjoner: " . $e->getMessage());
 }
 ?>
 

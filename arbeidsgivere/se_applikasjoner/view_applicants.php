@@ -13,7 +13,7 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
 
 // Check if the job_application_id is set
 if (!isset($_POST['job_application_id'])) {
-    echo "Invalid request.";
+    echo "Ugyldig forespørsel.";
     exit();
 }
 
@@ -29,7 +29,7 @@ try {
     $stmt->execute();
     $applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Error fetching applicants: " . $e->getMessage());
+    die("Det skjedde en feil under hentingen av applikanter: " . $e->getMessage());
 }
 ?>
 

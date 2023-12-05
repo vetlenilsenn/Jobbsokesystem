@@ -19,7 +19,7 @@ try {
     $categoriesStmt = $pdo->query($categoriesQuery);
     $categories = $categoriesStmt->fetchAll(PDO::FETCH_COLUMN);
 } catch (PDOException $e) {
-    die("Error fetching user categories: " . $e->getMessage());
+    die("Det skjedde en feil under hentingen av bruker kategorier: " . $e->getMessage());
 }
 
 // Fetch users with searchable set to true and based on selected user_category
