@@ -3,8 +3,6 @@ require_once '../../database/tilkobling.php';
 
 session_start();
 
-
-
 // Check if the user is logged in and is an employer
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../../reglog/login/login.php');
@@ -90,23 +88,25 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
     </style>
 </head>
 <body>
-    <?php include('../../templates/header/header.php'); 
-    // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $jobTitle = $_POST['job_title'];
-    $jobDescription = $_POST['job_description'];
-    $jobCategory = $_POST['job_category'];
-    $location = $_POST['location']; // Added location field
-
-    // Create job application
-    if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
-        echo "Jobb applikasjon er opprettet.";
-    } else {
-        echo "Det skjedde en feil under opprettingen.";
-    }
-}?>
-
+<?php include('../../templates/header/header.php'); ?>
     <h2>Opprett Jobb Applikasjon</h2>
+    <?php
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $jobTitle = filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING);
+        $jobDescription = filter_input(INPUT_POST, 'job_description', FILTER_SANITIZE_STRING);
+        $jobCategory = filter_input(INPUT_POST, 'job_category', FILTER_SANITIZE_STRING);
+        $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
+
+        // Create job application
+        if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
+            echo "Jobb applikasjon er opprettet.";
+        } else {
+            echo "Det skjedde en feil under opprettingen.";
+        }
+    }
+    ?>
+
     <form action="arbeidsgiver_nyapplication.php" method="post" accept-charset="UTF-8">
         <label for="job_title">Jobb Tittel:</label>
         <input type="text" id="job_title" name="job_title" required>
