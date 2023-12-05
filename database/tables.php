@@ -39,7 +39,8 @@ $sqlCreateUsersTable = "CREATE TABLE IF NOT EXISTS users (
     is_company BOOLEAN NOT NULL,
     profile_picture VARCHAR(255),
     searchable BOOLEAN DEFAULT false,
-    user_category VARCHAR(50)
+    user_category VARCHAR(50),
+    cv_path VARCHAR(255) DEFAULT NULL
 )";
 
 try {
