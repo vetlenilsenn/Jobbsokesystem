@@ -10,14 +10,14 @@ if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
 }
 
 // Function to create a new job application
-function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $jobCategory, $location) {
+function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $jobCategory, $location, $deadline) {
     global $pdo;
 
     // Retrieve company name from the session
     $companyName = $_SESSION['company_name'];
 
-    $query = "INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category, company_name, location) 
-            VALUES (:user_id, :company_id, :job_title, :job_description, :job_category, :company_name, :location)";
+    $query = "INSERT INTO job_applications (user_id, company_id, job_title, job_description, job_category, company_name, location, deadline) 
+            VALUES (:user_id, :company_id, :job_title, :job_description, :job_category, :company_name, :location, :deadline)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
     $stmt->bindParam(':company_id', $companyId, PDO::PARAM_INT);
@@ -26,10 +26,10 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
     $stmt->bindParam(':job_category', $jobCategory, PDO::PARAM_STR);
     $stmt->bindParam(':company_name', $companyName, PDO::PARAM_STR);
     $stmt->bindParam(':location', $location, PDO::PARAM_STR);
+    $stmt->bindParam(':deadline', $deadline, PDO::PARAM_STR);
 
     return $stmt->execute();
 }
-
 ?>
 
 <!-- HTML Form for Job Application Creation -->
@@ -66,7 +66,8 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
         }
 
         input[type="text"],
-        textarea {
+        textarea,
+        input[type="date"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
@@ -97,9 +98,10 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
         $jobDescription = filter_input(INPUT_POST, 'job_description', FILTER_SANITIZE_STRING);
         $jobCategory = filter_input(INPUT_POST, 'job_category', FILTER_SANITIZE_STRING);
         $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
+        $deadline = $_POST['deadline']; // No need for filtering as it's a date input
 
         // Create job application
-        if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location)) {
+        if (createJobApplication($_SESSION['user_id'], $_SESSION['company_id'], $jobTitle, $jobDescription, $jobCategory, $location, $deadline)) {
             echo "Jobb applikasjon er opprettet.";
         } else {
             echo "Det skjedde en feil under opprettingen.";
@@ -119,6 +121,9 @@ function createJobApplication($userId, $companyId, $jobTitle, $jobDescription, $
 
         <label for="location">Lokasjon:</label>
         <input type="text" id="location" name="location" required>
+
+        <label for="deadline">Søknadsfrist:</label>
+        <input type="date" id="deadline" name="deadline" required>
 
         <input type="submit" value="Opprett Jobb Applikasjon">
     </form>
