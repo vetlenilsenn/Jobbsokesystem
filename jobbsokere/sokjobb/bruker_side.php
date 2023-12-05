@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
     <form action="" method="post">
         <label for="category">Velg en jobbkatogori:</label>
         <select name="selected_category" id="category">
-            <option value="">No Category</option> <!-- Added "No Category" option -->
+            <option value="">Ingen kategori</option> <!-- Added "No Category" option -->
             <?php foreach ($jobCategories as $category) : ?>
                 <option value="<?php echo $category; ?>" <?php echo ($category == $selectedCategory) ? 'selected' : ''; ?>><?php echo $category; ?></option>
             <?php endforeach; ?>

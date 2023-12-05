@@ -5,5 +5,5 @@ if (isset($_GET['cv_path'])) {
     header('Content-Type: application/pdf');
     readfile($cvPath);
 } else {
-    echo "CV not found.";
+    echo "CV kunne ikke hentes.";
 }
