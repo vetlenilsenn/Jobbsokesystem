@@ -33,45 +33,6 @@ try {
     die("Error fetching job application details: " . $e->getMessage());
 }
 
-// Process the form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if letter_text is set and not empty
-    $letterText = isset($_POST['letter_text']) ? $_POST['letter_text'] : null;
-
-    if (!empty($letterText)) {
-        // Handle file upload
-        if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
-            $cvTempPath = $_FILES['cv']['tmp_name'];
-            $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
-
-            // Move the uploaded file to the desired location
-            if (move_uploaded_file($cvTempPath, $cvPath)) {
-                // Insert into received_applications table
-                try {
-                    $insertQuery = "INSERT INTO received_applications (job_application_id, user_id, cv_path, letter_text, date_applied) 
-                                    VALUES (:job_application_id, :user_id, :cv_path, :letter_text, NOW())";
-                    $insertStmt = $pdo->prepare($insertQuery);
-                    $insertStmt->bindParam(':job_application_id', $jobId, PDO::PARAM_INT);
-                    $insertStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-                    $insertStmt->bindParam(':cv_path', $cvPath, PDO::PARAM_STR);
-                    $insertStmt->bindParam(':letter_text', $letterText, PDO::PARAM_STR);
-
-                    if ($insertStmt->execute()) {
-                        echo "Søknaden er sendt inn.";
-                    } else {
-                        echo "Det skjedde en feil under innsendigen.";
-                    }
-                } catch (PDOException $e) {
-                    die("Det skjedde en feil under innsendigen: " . $e->getMessage());
-                }
-            } else {
-                echo "Feil under CV håndtering.";
-            }
-        } else {
-            echo "CV filen ble ikke lastet opp eller er ugyldig.";
-        }
-    }
-}
 
 // Rest of the HTML content for displaying job application details and the form for CV and application letter
 ?>
@@ -144,14 +105,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <?php include('../../templates/header/header.php'); ?>
+    <?php include('../../templates/header/header.php'); 
+    // Process the form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if letter_text is set and not empty
+    $letterText = isset($_POST['letter_text']) ? $_POST['letter_text'] : null;
+
+    if (!empty($letterText)) {
+        // Handle file upload
+        if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
+            // Validate file type and size
+            $allowedFileTypes = ['application/pdf'];
+            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+
+            if (!in_array($_FILES['cv']['type'], $allowedFileTypes) || $_FILES['cv']['size'] > $maxFileSize) {
+                echo "Invalid file type or size.";
+                exit();
+            }
+
+            $cvTempPath = $_FILES['cv']['tmp_name'];
+            $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
+
+            // Move the uploaded file to the desired location
+            if (move_uploaded_file($cvTempPath, $cvPath)) {
+                // Insert into received_applications table
+                try {
+                    $insertQuery = "INSERT INTO received_applications (job_application_id, user_id, cv_path, letter_text, date_applied) 
+                                    VALUES (:job_application_id, :user_id, :cv_path, :letter_text, NOW())";
+                    $insertStmt = $pdo->prepare($insertQuery);
+                    $insertStmt->bindParam(':job_application_id', $jobId, PDO::PARAM_INT);
+                    $insertStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                    $insertStmt->bindParam(':cv_path', $cvPath, PDO::PARAM_STR);
+                    $insertStmt->bindParam(':letter_text', $letterText, PDO::PARAM_STR);
+
+                    if ($insertStmt->execute()) {
+                        echo "Søknaden er sendt inn.";
+                    } else {
+                        echo "Det skjedde en feil under innsendigen.";
+                    }
+                } catch (PDOException $e) {
+                    die("Det skjedde en feil under innsendigen: " . $e->getMessage());
+                }
+            } else {
+                echo "Feil under CV håndtering.";
+            }
+        } else {
+            echo "CV filen ble ikke lastet opp eller er ugyldig.";
+        }
+    }
+}
+?>
     <h1>Application Details</h1>
-    <p><strong>Company Name:</strong> <?php echo $jobApplication['company_name']; ?></p>
-    <p><strong>Job Title:</strong> <?php echo $jobApplication['job_title']; ?></p>
-    <p><strong>Job Description:</strong> <?php echo $jobApplication['job_description']; ?></p>
-    <p><strong>Job Category:</strong> <?php echo $jobApplication['job_category']; ?></p>
-    <p><strong>Contact Person:</strong> <?php echo isset($jobApplication['contact_person_name']) ? $jobApplication['contact_person_name'] . ' ' . $jobApplication['contact_person_surname'] : 'N/A'; ?></p>
-    <p><strong>Contact Email:</strong> <?php echo isset($jobApplication['contact_person_email']) ? $jobApplication['contact_person_email'] : 'N/A'; ?></p>
+    <p><strong>Selskapets Navn:</strong> <?php echo $jobApplication['company_name']; ?></p>
+    <p><strong>Jobb Tittel:</strong> <?php echo $jobApplication['job_title']; ?></p>
+    <p><strong>Jobb Beskrivelse:</strong> <?php echo $jobApplication['job_description']; ?></p>
+    <p><strong>Jobb Kategori:</strong> <?php echo $jobApplication['job_category']; ?></p>
+    <p><strong>Kontakt Person:</strong> <?php echo isset($jobApplication['contact_person_name']) ? $jobApplication['contact_person_name'] . ' ' . $jobApplication['contact_person_surname'] : 'N/A'; ?></p>
+    <p><strong>Kontakt Email:</strong> <?php echo isset($jobApplication['contact_person_email']) ? $jobApplication['contact_person_email'] : 'N/A'; ?></p>
 
     <?php if (!empty($jobApplication['location'])): ?>
         <img class="map-image" src="https://www.mapquestapi.com/staticmap/v5/map?key=btjIKc7BBgW3hVRGcw34hVn7YYYDioce&size=600,400&locations=<?php echo urlencode($jobApplication['location']); ?>" alt="Kartutsnitt">
