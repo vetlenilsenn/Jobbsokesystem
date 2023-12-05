@@ -7,13 +7,11 @@ if (!isset($_SESSION['user'])) {
 
 require_once '../../database/tilkobling.php';
 
-
-
 // Fetch user information
 try {
     $userId = $_SESSION['user_id'];
 
-    $query = "SELECT username, name, surname, email, searchable, user_category FROM users WHERE user_id = :user_id";
+    $query = "SELECT username, name, surname, email, searchable, user_category, cv_path, profile_picture FROM users WHERE user_id = :user_id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
     $stmt->execute();
@@ -29,32 +27,48 @@ try {
 
 // Process form submission for updating user information
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Update user information
+    // Handle file uploads
+    $cvPath = $userInfo['cv_path'];
+    $profilePicturePath = $userInfo['profile_picture'];
+
+    if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
+        // Handle CV file upload
+        $cvTempPath = $_FILES['cv']['tmp_name'];
+        $cvPath = '../../uploads/cv_' . $userId . '_' . time() . '.pdf'; // Adjust the path and filename as needed
+        move_uploaded_file($cvTempPath, $cvPath);
+    }
+
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+        // Handle profile picture file upload
+        $profilePictureTempPath = $_FILES['profile_picture']['tmp_name'];
+        $profilePicturePath = '../../uploads/profile_picture_' . $userId . '_' . time() . '.jpg'; // Adjust the path and filename as needed
+        move_uploaded_file($profilePictureTempPath, $profilePicturePath);
+    }
+
+    // Update user information including CV and profile picture paths
     try {
-        // Update searchable
+        // Update searchable and user category
         $searchable = isset($_POST['searchable']) ? 1 : 0; // Convert to boolean
-        $updateQuery = "UPDATE users SET searchable = :searchable WHERE user_id = :user_id";
+        $userCategory = isset($_POST['user_category']) ? $_POST['user_category'] : $userInfo['user_category'];
+
+        $updateQuery = "UPDATE users 
+                        SET searchable = :searchable, 
+                            user_category = :user_category, 
+                            cv_path = :cv_path, 
+                            profile_picture = :profile_picture 
+                        WHERE user_id = :user_id";
+
         $updateStmt = $pdo->prepare($updateQuery);
         $updateStmt->bindParam(':searchable', $searchable, PDO::PARAM_INT);
+        $updateStmt->bindParam(':user_category', $userCategory, PDO::PARAM_STR);
+        $updateStmt->bindParam(':cv_path', $cvPath, PDO::PARAM_STR);
+        $updateStmt->bindParam(':profile_picture', $profilePicturePath, PDO::PARAM_STR);
         $updateStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
 
         if ($updateStmt->execute()) {
-            echo "Searchable status updated successfully.";
+            echo "User information updated successfully.";
         } else {
-            echo "Error updating searchable status.";
-        }
-
-        // Update user category
-        $userCategory = isset($_POST['user_category']) ? $_POST['user_category'] : $userInfo['user_category'];
-        $updateCategoryQuery = "UPDATE users SET user_category = :user_category WHERE user_id = :user_id";
-        $updateCategoryStmt = $pdo->prepare($updateCategoryQuery);
-        $updateCategoryStmt->bindParam(':user_category', $userCategory, PDO::PARAM_STR);
-        $updateCategoryStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-
-        if ($updateCategoryStmt->execute()) {
-            echo "User category updated successfully.";
-        } else {
-            echo "Error updating user category.";
+            echo "Error updating user information.";
         }
     } catch (PDOException $e) {
         die("Error updating user information: " . $e->getMessage());
@@ -114,6 +128,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 4px;
         }
 
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .profile-picture {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
         input[type="submit"] {
             background-color: #4CAF50;
             color: #fff;
@@ -126,6 +156,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
+        .cv-button {
+            display: inline-block;
+            margin-left: 10px;
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .cv-button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -133,7 +177,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>User Information</h2>
     <p><strong>Username:</strong> <?php echo $userInfo['username']; ?></p>
 
-    <form action="bruker_info.php" method="post">
+    <?php
+    // Display profile picture if available
+    $profilePicturePath = $userInfo['profile_picture'];
+    if (!empty($profilePicturePath)) {
+        echo "<img class='profile-picture' src=\"$profilePicturePath\" alt=\"Profile Picture\">";
+    }
+    ?>
+
+    <form action="bruker_info.php" method="post" enctype="multipart/form-data">
         <label for="new_name">Name:</label>
         <input type="text" id="new_name" name="new_name" value="<?php echo $userInfo['name']; ?>">
 
@@ -149,11 +201,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="user_category">Hovederfaringsområde:</label>
         <input type="text" id="user_category" name="user_category" value="<?php echo $userInfo['user_category']; ?>">
 
+        <label for="cv"><?php echo empty($userInfo['cv_path']) ? 'Upload CV:' : 'Change CV:'; ?></label>
+        <input type="file" id="cv" name="cv">
+
+        <label for="profile_picture"><?php echo empty($userInfo['profile_picture']) ? 'Upload Profile Picture:' : 'Change Profile Picture:'; ?></label>
+        <input type="file" id="profile_picture" name="profile_picture">
+
         <label for="new_password">New Password:</label>
         <input type="password" id="new_password" name="new_password">
 
         <input type="submit" value="Update Information">
+
+        <?php
+        // Add a button to view CV in a new page
+        $cvPath = $userInfo['cv_path'];
+        if (!empty($cvPath)) {
+            echo "<a class='cv-button' href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\">View CV</a>";
+        }
+        ?>
     </form>
+
     <p> 
         Vær obs på at endringer som er gjort etter innsendt søknad kan føre til at inkorrekt info
         står i søknaden!
