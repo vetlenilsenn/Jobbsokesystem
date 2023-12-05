@@ -3,13 +3,13 @@ require_once '../../database/tilkobling.php';
 
 session_start();
 
-// Check if the user is logged in and is an employer
+//Sjekk om brukeren er logget inn og er en arbeidsgiver
 if (!isset($_SESSION['user']) || !$_SESSION['is_company']) {
     header('Location: ../../reglog/login/login.php');
     exit();
 }
 
-// Fetch job applications for the current company
+//Hent jobbsøknader for gjeldende selskap
 try {
     $companyId = $_SESSION['company_id'];
 
@@ -23,8 +23,7 @@ try {
 }
 ?>
 
-<!-- HTML content for displaying job applications -->
-<!-- HTML content for displaying job applications -->
+<!-- HTML-innhold for visning av jobbsøknader -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,11 +62,11 @@ try {
 
         .job-application form {
             display: inline-block;
-            margin-right: 10px; /* Add some margin between buttons */
+            margin-right: 10px; /* Legg til litt margin mellom knappene */
         }
 
         .job-application .view-btn input[type="submit"] {
-            background-color: #4caf50; /* Green color for "Se Applikanter" button */
+            background-color: #4caf50; /* Grønn farge for "Se Applikanter"-knappen */
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -80,7 +79,7 @@ try {
         }
 
         .job-application .delete-btn input[type="submit"] {
-            background-color: #ff4d4d; /* Red color for "Slett Annonse" button */
+            background-color: #ff4d4d; /* Rød farge for "Slett Annonse"-knappen */
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -103,13 +102,13 @@ try {
                 - <?php echo $job['job_description']; ?>
                 - <?php echo $job['location']; ?>
                 
-                <!-- Add a button to view applicants for this job -->
+                <!-- Legg til en knapp for å se søkere for denne jobben -->
                 <form action="view_applicants.php" method="post" class="view-btn">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
                     <input type="submit" value="Se Applikanter">
                 </form>
                 
-                <!-- Add a button to delete the job for this job -->
+                <!-- Legg til en knapp for å slette annonsen for denne jobben -->
                 <form action="delete_job.php" method="post" class="delete-btn">
                     <input type="hidden" name="job_application_id" value="<?php echo $job['application_id']; ?>">
                     <input type="submit" value="Slett Annonse">
