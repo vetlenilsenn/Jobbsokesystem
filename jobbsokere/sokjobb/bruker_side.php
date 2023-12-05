@@ -5,10 +5,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-
 require_once '../../database/tilkobling.php';
-
-
 
 // Fetch unique job categories from the database
 try {
@@ -19,14 +16,24 @@ try {
     die("Error fetching job categories: " . $e->getMessage());
 }
 
-// Fetch job applications from the database based on selected category
+// Initialize $selectedCategory
+$selectedCategory = '';
+
+// Fetch job applications from the database based on the selected category
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category'])) {
     $selectedCategory = $_POST['selected_category'];
     
     try {
-        $query = "SELECT * FROM job_applications WHERE job_category = :job_category";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':job_category', $selectedCategory, PDO::PARAM_STR);
+        if (!empty($selectedCategory)) {
+            $query = "SELECT * FROM job_applications WHERE job_category = :job_category";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':job_category', $selectedCategory, PDO::PARAM_STR);
+        } else {
+            // If "No Category" is selected, fetch all job applications
+            $query = "SELECT * FROM job_applications";
+            $stmt = $pdo->query($query);
+        }
+
         $stmt->execute();
         $jobApplications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -113,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
 <body>
     <?php include('../../templates/header/header.php'); ?>
     <h1>Velkommen til brukersiden, <?php echo $_SESSION['user']; ?>!</h1>
+
     
     <h2>Jobbsøknader</h2>
 
@@ -120,8 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
     <form action="" method="post">
         <label for="category">Velg en jobbkatogori:</label>
         <select name="selected_category" id="category">
+            <option value="">No Category</option> <!-- Added "No Category" option -->
             <?php foreach ($jobCategories as $category) : ?>
-                <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
+                <option value="<?php echo $category; ?>" <?php echo ($category == $selectedCategory) ? 'selected' : ''; ?>><?php echo $category; ?></option>
             <?php endforeach; ?>
         </select>
         <input type="submit" value="Søk">
@@ -132,16 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
         <li class="job-application-item">
             <strong><?php echo $job['job_title']; ?></strong>
             - <?php echo $job['job_description']; ?>
-            <!-- Change the form method back to POST -->
             <form action="bruker_side_apply.php" method="post">
                 <input type="hidden" name="job_id" value="<?php echo $job['application_id']; ?>">
                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                <!-- Remove the letter_text field -->
                 <input type="submit" value="Se og søk">
             </form>
         </li>
     <?php endforeach; ?>
-</ul>
-
+    </ul>
 </body>
 </html>
