@@ -18,11 +18,11 @@ try {
     $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$userInfo) {
-        echo "User not found.";
+        echo "Kunne ikke finne bruker.";
         exit();
     }
 } catch (PDOException $e) {
-    die("Error fetching user information: " . $e->getMessage());
+    die("Det skjedde en feil under hentingen av bruker info: " . $e->getMessage());
 }
 
 // Process form submission for updating user information
@@ -75,14 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateStmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
 
         if ($updateStmt->execute()) {
-            echo "User information updated successfully.";
+
+            echo "Bruker info oppdatert.";
             // Refresh the page after a successful update
             echo "<meta http-equiv='refresh' content='0'>";
+
         } else {
-            echo "Error updating user information.";
+            echo "Det skjedde en feil under oppdateringen av bruker info.";
         }
     } catch (PDOException $e) {
-        die("Error updating user information: " . $e->getMessage());
+        die("Det skjedde en feil under oppdateringen av bruker info: " . $e->getMessage());
     }
 }
 ?>
@@ -93,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Information</title>
+    <title>Bruker Informasjon</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -185,8 +187,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <?php include('../../templates/header/header.php'); ?>
-    <h2>User Information</h2>
-    <p><strong>Username:</strong> <?php echo $userInfo['username']; ?></p>
+    <h2>Bruker informasjon</h2>
+    <p><strong>Brukernavn:</strong> <?php echo $userInfo['username']; ?></p>
 
     <?php
     // Display profile picture if available
@@ -197,37 +199,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
 
     <form action="bruker_info.php" method="post" enctype="multipart/form-data">
-        <label for="new_name">Name:</label>
+        <label for="new_name">Fornavn:</label>
         <input type="text" id="new_name" name="new_name" value="<?php echo $userInfo['name']; ?>">
 
-        <label for="new_surname">Surname:</label>
+        <label for="new_surname">Etternavn:</label>
         <input type="text" id="new_surname" name="new_surname" value="<?php echo $userInfo['surname']; ?>">
 
         <label for="new_email">Email:</label>
         <input type="email" id="new_email" name="new_email" value="<?php echo $userInfo['email']; ?>">
 
-        <label for="searchable">Searchable:</label>
+        <label for="searchable">Søkbar for arbeidsgivere:</label>
         <input type="checkbox" id="searchable" name="searchable" <?php echo $userInfo['searchable'] ? 'checked' : ''; ?>>
 
         <label for="user_category">Hovederfaringsområde:</label>
         <input type="text" id="user_category" name="user_category" value="<?php echo $userInfo['user_category']; ?>">
 
-        <label for="cv"><?php echo empty($userInfo['cv_path']) ? 'Upload CV:' : 'Change CV:'; ?></label>
+        <label for="cv"><?php echo empty($userInfo['cv_path']) ? 'Last opp CV:' : 'Endre CV:'; ?></label>
         <input type="file" id="cv" name="cv">
 
-        <label for="profile_picture"><?php echo empty($userInfo['profile_picture']) ? 'Upload Profile Picture:' : 'Change Profile Picture:'; ?></label>
+        <label for="profile_picture"><?php echo empty($userInfo['profile_picture']) ? 'Last opp profilbilde:' : 'Endre profilbilde:'; ?></label>
         <input type="file" id="profile_picture" name="profile_picture">
 
-        <label for="new_password">New Password:</label>
+        <label for="new_password">Nytt passord:</label>
         <input type="password" id="new_password" name="new_password">
 
-        <input type="submit" value="Update Information">
+        <input type="submit" value="Oppdater Informasjon">
 
         <?php
         // Add a button to view CV in a new page
         $cvPath = $userInfo['cv_path'];
         if (!empty($cvPath)) {
-            echo "<a class='cv-button' href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\">View CV</a>";
+            echo "<a class='cv-button' href=\"view_cv.php?cv_path=$cvPath\" target=\"_blank\">Se CV</a>";
         }
         ?>
     </form>

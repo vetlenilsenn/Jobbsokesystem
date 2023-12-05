@@ -57,18 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $insertStmt->bindParam(':letter_text', $letterText, PDO::PARAM_STR);
 
                     if ($insertStmt->execute()) {
-                        echo "Application submitted successfully.";
+                        echo "Søknaden er sendt inn.";
                     } else {
-                        echo "Error submitting application.";
+                        echo "Det skjedde en feil under innsendigen.";
                     }
                 } catch (PDOException $e) {
-                    die("Error processing application: " . $e->getMessage());
+                    die("Det skjedde en feil under innsendigen: " . $e->getMessage());
                 }
             } else {
-                echo "Error moving uploaded CV file.";
+                echo "Feil under CV håndtering.";
             }
         } else {
-            echo "CV file not uploaded or invalid.";
+            echo "CV filen ble ikke lastet opp eller er ugyldig.";
         }
     }
 }
@@ -156,21 +156,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (!empty($jobApplication['location'])): ?>
         <img class="map-image" src="https://www.mapquestapi.com/staticmap/v5/map?key=btjIKc7BBgW3hVRGcw34hVn7YYYDioce&size=600,400&locations=<?php echo urlencode($jobApplication['location']); ?>" alt="Kartutsnitt">
     <?php else: ?>
-        <p>No location specified for this job application.</p>
+        <p>Ingen lokasjoner spesifisert for denne jobben.</p>
     <?php endif; ?>
 
-    <h2>Submit Your Application</h2>
+    <h2>Send inn din søknad</h2>
     <form action="bruker_side_apply.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="job_id" value="<?php echo $jobId; ?>">
         <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
 
-        <label for="cv">Upload CV:</label>
+        <label for="cv">Last oppp CV:</label>
         <input type="file" name="cv" accept=".pdf" required>
         
-        <label for="letter_text">Application Letter:</label>
+        <label for="letter_text">Søknadsbrev:</label>
         <textarea name="letter_text" required></textarea>
 
-        <input type="submit" value="Submit Application">
+        <input type="submit" value="Send inn søknad">
     </form>
 </body>
 </html>
