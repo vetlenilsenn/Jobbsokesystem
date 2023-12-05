@@ -42,28 +42,31 @@
     include('database/tilkobling.php'); // Adjust the path as needed
 
     try {
-        // Fetch job applications data with company details
+        // Fetch job applications data with company details and filter out past deadlines
         $stmt = $pdo->query("
             SELECT 
                 ja.job_title,
                 c.company_name,
                 ja.job_description,
-                ja.job_category
+                ja.job_category,
+                ja.deadline
             FROM job_applications ja
             JOIN companies c ON ja.company_id = c.company_id
+            WHERE ja.deadline >= CURDATE()
         ");
         $jobApplications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Display the data in a table
         if ($jobApplications) {
             echo '<table>';
-            echo '<tr><th>Titel</th><th>Bedrift</th><th>Jobb beskrivelse</th><th>Jobb kategori</th></tr>';
+            echo '<tr><th>Tittel</th><th>Bedrift</th><th>Jobb beskrivelse</th><th>Jobb kategori</th><th>Søknadsfrist</th></tr>';
             foreach ($jobApplications as $application) {
                 echo '<tr>';
                 echo '<td>' . $application['job_title'] . '</td>';
                 echo '<td>' . $application['company_name'] . '</td>';
                 echo '<td>' . $application['job_description'] . '</td>';
                 echo '<td>' . $application['job_category'] . '</td>';
+                echo '<td>' . $application['deadline'] . '</td>';
                 echo '</tr>';
             }
             echo '</table>';
