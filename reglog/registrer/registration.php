@@ -2,7 +2,7 @@
 require_once '../../database/tilkobling.php';
 
 
-//Funksjoner for å opprette bruker
+//Funksjon for å opprette en ny bruker
 function createUser($username, $password, $email, $isCompany, $name, $surname) {
     global $pdo;
 
@@ -20,11 +20,12 @@ function createUser($username, $password, $email, $isCompany, $name, $surname) {
     return $stmt->execute();
 }
 
+
 //Funksjoner som lager et nytt selskap og automatisk setter kontakt persjon basert på Navn og fornavn
 function createCompany($userId, $companyName, $name, $surname) {
     global $pdo;
 
-    //auto generer dette
+    //Auto-generer kontaktperson basert på navn og etternavn
     $contactPerson = $name . ' ' . $surname;
 
     $query = "INSERT INTO companies (user_id, company_name, contact_person) VALUES (:user_id, :company_name, :contact_person)";
@@ -36,6 +37,7 @@ function createCompany($userId, $companyName, $name, $surname) {
     return $stmt->execute();
 }
 
+
 //Sjekker om formen er sendt
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -46,25 +48,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $surname = $_POST['surname'];
 
-    //Validerer passord mot confirm assord
+
+    //Valider at passordene matcher
     if ($password !== $confirmPassword) {
-        echo "Error: Passord er ikke like.";
+        echo "Feil: Passord er ikke like.";
         exit();
     }
 
-    //Lager bruker
-    if (createUser($username, $password, $email, $isCompany, $name, $surname)) {
-        echo "Bruker opprettelse vellykket.<br>";
 
-        //Hvis burker er selskap set company name
+    //Opprett bruker
+
+    if (createUser($username, $password, $email, $isCompany, $name, $surname)) {
+        echo "Brukeropprettelse vellykket.<br>";
+
+
+        //Hvis brukeren er en bedrift, opprett en bedrift med automatisk generert kontaktperson
         if ($isCompany) {
-            $userId = $pdo->lastInsertId();
+            $userId = $pdo->lastInsertId(); // Hent user_id for den nylig opprettede brukeren
+
             $companyName = $_POST['company_name'];
 
             if (createCompany($userId, $companyName, $name, $surname)) {
-                echo "Bedrift opprettelse vellykket.";
+                echo "Bedriftopprettelse vellykket.";
             } else {
-                echo "Feil ved opprettelse av Bedrift.";
+                echo "Feil ved opprettelse av bedrift.";
             }
         }
     } else {
@@ -161,19 +168,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="password">Passord:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <label for="confirm_password">Bekreft Password:</label>
+        <label for="confirm_password">Bekreft Passord:</label>
         <input type="password" id="confirm_password" name="confirm_password" required>
         <br>
-        <label for="email">Email:</label>
+        <label for="email">E-post:</label>
         <input type="email" id="email" name="email" required>
         <br>
         <input type="checkbox" id="is_company" name="is_company" value="1">
         <label for="is_company">Er dette en bedrift?</label>
         <br>
-        <label for="company_name">Bedrift navn:</label>
+        <label for="company_name">Bedriftens navn:</label>
         <input type="text" id="company_name" name="company_name">
         <br>
-        <input type="submit" value="Lag bruker og bedrift">
+        <input type="submit" value="Opprett bruker og bedrift">
     </form>
     <p>Har du allerede en konto? <a href="../login/login.php"> Logg inn her</a></p>
 </body>

@@ -1,14 +1,13 @@
 <?php
 require_once '../../database/tilkobling.php';
 
-session_start(); // Start the session
-
+session_start(); //Starter økten
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Code to retrieve the user based on the username
+    //Kode for å hente brukeren basert på brukernavnet
     $query = "SELECT * FROM users WHERE username = :username";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -16,14 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['user_id']; // Save the user_id in the session
-        $_SESSION['user'] = $user['username']; // Save the username in the session
+        $_SESSION['user_id'] = $user['user_id']; //Lagrer user_id i økten
+        $_SESSION['user'] = $user['username']; //Lagrer brukernavnet i økten
 
-        // Determine user type and set session variables accordingly
+        //Avgjør brukertype og setter øktvariabler deretter
         if ($user['is_company'] == 1) {
             $_SESSION['is_company'] = true;
             $_SESSION['is_user'] = false;
-            // Retrieve the company_id and company_name for employers
+
+            //Henter company_id og company_name for arbeidsgivere
             $queryCompany = "SELECT company_id, company_name FROM companies WHERE user_id = :user_id";
             $stmtCompany = $pdo->prepare($queryCompany);
             $stmtCompany->bindParam(':user_id', $user['user_id'], PDO::PARAM_INT);
@@ -31,32 +31,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $company = $stmtCompany->fetch();
 
             if ($company) {
-                $_SESSION['company_id'] = $company['company_id']; // Save the company_id in the session for employers
-                $_SESSION['company_name'] = $company['company_name']; // Save the company_name in the session for employers
+                $_SESSION['company_id'] = $company['company_id']; //Lagrer company_id i økten for arbeidsgivere
+                $_SESSION['company_name'] = $company['company_name']; //Lagrer company_name i økten for arbeidsgivere
             }
         } else {
             $_SESSION['is_company'] = false;
             $_SESSION['is_user'] = true;
         }
 
-        // Debugging statements
+        //Debugging-uttalelser
         var_dump($_SESSION);
-        
-        // Redirect based on user type
+
+        //Videresending basert på brukertype
         if ($_SESSION['is_company']) {
-            // This is an employer, redirect to the employer page
+            //Dette er en arbeidsgiver, videresend til arbeidsgiver-siden
             header('Location: ../../arbeidsgivere/arbeidsgiver_side.php');
         } elseif ($_SESSION['is_user']) {
-            // This is a job seeker, redirect to the existing protected page
+            //Dette er en jobbsøker, videresend til den eksisterende beskyttede siden
             header('Location: ../../jobbsokere/sokjobb/bruker_side.php');
         }
-        exit(); // Ensure that no further code is executed after the redirect
+        exit(); //Sørger for at ingen ytterligere kode blir utført etter videresendingen
     } else {
         echo "Feil brukernavn eller passord.";
     }
 }
 ?>
-<!-- The rest of your login form goes here -->
 
 <!DOCTYPE html>
 <html>
