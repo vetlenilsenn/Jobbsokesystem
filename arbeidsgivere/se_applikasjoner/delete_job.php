@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: arbeidsgiver_applications.php'); // Redirect back to applications side
             exit();
         } else {
-            throw new Exception('Error deleting job application.');
+            throw new Exception('Feil under sletting av jobb applikasjon.');
         }
     } catch (Exception $e) {
         // Handle exceptions, log errors, or redirect to an error page
@@ -41,7 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     // Redirect to an error page if accessed through GET or without necessary parameters
-    header('Location: your_error_page.php');
+    header('Location: arbeidsgiver_applications.php');
+    echo 'Feil under sletting.';
     exit();
 }
 ?>
