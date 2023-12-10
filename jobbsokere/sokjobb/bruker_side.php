@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_category']))
             //Hvis ingen kategorier er valgt velger den alle som ikke er utgått
             $query = "SELECT * FROM job_applications 
                     WHERE deadline >= CURDATE()";  
+            $stmt = $pdo->prepare($query); //Fikset error med at ingen kategorier fungerte
         }
 
         $stmt->execute();
